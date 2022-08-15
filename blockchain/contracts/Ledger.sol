@@ -39,7 +39,7 @@ contract Ledger {
     }
 
     modifier onlyAccountOwners {
-        if (accounts[msg.sender].walletAddress == address(0))
+        if (!isRegistered())
             revert NoAccountExists();
         _;
     }
@@ -152,7 +152,12 @@ contract Ledger {
         }
     }
 
-    /// Returns if the requesting user is admin
+    /// Returns whether the user has an account
+    function isRegistered() public view returns (bool) {
+        return accounts[msg.sender].walletAddress != address(0);
+    }
+
+    /// Returns whether the requesting user is an admin
     function isAdmin() public view returns (bool) {
         for (uint i = 0; i < adminUsers.length; i++) {
             if (adminUsers[i] == msg.sender)
@@ -161,7 +166,7 @@ contract Ledger {
         return false;
     }
 
-    /// Returns if the requesting user is admin
+    /// Returns whether the requesting user is an adult
     function isAdult() public view onlyAccountOwners returns (bool) {
         return block.timestamp > accounts[msg.sender].becomesAdultAt;
     }
