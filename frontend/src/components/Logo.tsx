@@ -21,6 +21,14 @@ function Logo() {
         top: '-103px'
     }
 
+    var logoNavbarStyle: CSS.Properties = {
+        position: 'absolute',
+        width: '500px',
+        height: '500px',
+        left: '117px',
+        top: '-103px'
+    }
+
 
 
   return (

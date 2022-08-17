@@ -5,20 +5,36 @@ import "antd/dist/antd.css";
 import { Button, Divider } from "antd";
 import type { SizeType } from "antd/es/config-provider/SizeContext";
 import React, { useState } from "react";
-import Fox from "../images/MetamaskFox.svg";
-import Telbg from "../images/Domuzcuk.svg";
+import Fox from "../images/MetamaskButton.jsx";
+import Telbg from "../images/pig.svg";
+
 
 
 function Landing() {
   const bg: CSS.Properties = {
-    backgroundColor: "#F8F4DB"
+    backgroundColor: "#F8F4DB",
+    position: 'relative',
+    top: '0',
+    right: '0',
+    bottom: '0',
+    left: '0',
+    
+
+    paddingTop: '125px',
+    paddingBottom: '170px',
+    paddingRight: '62px',
+    paddingLeft: ' 78px',
+
   };
 
   const logoLandingStyle: CSS.Properties = {
-    position: "absolute",
-
-    left: "119.8px",
+    position: 'relative',
     fontFamily: "Inter, sans-serif",
+   
+    marginTop: '125px',
+    marginBottom: '26px',
+    marginRight: '290px',
+    marginLeft: '41.8px',
     
   };
 
@@ -28,21 +44,46 @@ function Landing() {
   };
 
   const UpperText: CSS.Properties = {
+    position: 'relative',
     fontSize: "1.5em",
     fontFamily: "Inter, sans-serif",
+
+    marginRight: '90px',
+    marginBottom: '46px',
+    marginTop: '26px',
+    marginLeft: '53px',
+
+    
  
   };
 
   const LowerText: CSS.Properties = {
+    position: 'relative',
     fontSize: "1.2em",
     fontFamily: "Inter, sans-serif",
-    
-   
+
+    marginRight: '336px',
+    marginBottom: '65px',
+    marginTop: '46px',
+    marginLeft: '132px',
   };
+
+  const ButtonStyle: CSS.Properties = {
+    position: 'relative',
+
+    marginRight: '529px',
+    marginBottom: '1.584em',
+    marginTop: '5.336em',
+    marginLeft: '78px',
+
+  };
+
+  
+
 
   return (
     <>
-      <div style={bg}>
+      <body style={bg}>
 
 
 
@@ -50,50 +91,46 @@ function Landing() {
 
           <Col span = {16} >
 
-          <Divider type="vertical" style={{ height: "40%" }}>
-
-            <Row >
+            <Row style = {logoLandingStyle}>
               <Logo />
             </Row>
-            </Divider>
+      
 
-            <Divider type="vertical" style={{ height: "30%" }}>
-            <Row>
+           
+            <Row style={UpperText}>
               <h1>
                 Safely transfer your savings to your loved ones with,{" "}
                 <span style={purpleFontColor}>Intertech's Twelve</span>{" "}
               </h1>
             </Row>
-            </Divider>
+            
 
-            <Divider type="vertical" style={{ height: "20%" }}>
-            <Row>
+            
+            <Row style={LowerText}>
               <h2>
                 The reliable, modern, and innovative way to leave a legacy,
                 start now!
               </h2>
             </Row>
-            </Divider>
+            
 
-            <Divider>
+           
             <Row>
-              <Button>
-                <img src={Fox} alt="Connect with Metamask" />
-                Connect with Metamask
-              </Button>
+              
+                  <Fox/>
+              
             </Row>
-            </Divider>
-
+           
           </Col>
 
           <Col span = {8} >
             <Row>
-                <img src={Telbg} alt="Domuzun arkasındaki görseller" />
+                <Telbg/>
             </Row>
           </Col>
         </Row>
 
-      </div>
+      </body>
     </>
   );
 }
