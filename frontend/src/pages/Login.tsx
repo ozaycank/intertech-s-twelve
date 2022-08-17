@@ -14,8 +14,8 @@ function Login() {
 
   const imageClick = () => {
     console.log('Click');
-  } 
 
+  } 
 
   const bg: CSS.Properties = {
     backgroundColor: "#F8F4DB",
@@ -25,7 +25,6 @@ function Login() {
     bottom: "0",
     left: "0",
 
-  
   };
 
   const purpleFontColor: CSS.Properties = {
@@ -76,14 +75,13 @@ function Login() {
       <body style = {bg}>
 
       <Row>
-        <Col span={12} style = {logoLandingStyle}><Logo /></Col>
-        <Col span={12}>col-12</Col>
+      <Col flex={1} style = {logoLandingStyle}><Logo /></Col>
+      <Col flex={4}></Col>
       </Row>
 
       <Row>
-        <Col span={4}>col-4</Col>
-        <Col span={16} style = {FYI}>
-            
+      <Col flex={2}></Col>
+        <Col flex={1} style = {FYI}>
             <Row justify="center">
                 <h1><span style={purpleFontColor}>Before You Start</span> </h1>
               </Row>
@@ -93,29 +91,18 @@ function Login() {
             <Row justify="center">
                 <h3>You'll be guided by the role you choose.</h3>
             </Row>
-            
-            </Col>
-        <Col span={4}>col-4</Col>
+        </Col>
+      <Col flex={2}></Col>
       </Row>
 
-      
-      <Row  justify="space-between">
-      <Col span={4}>col-4</Col>
-        <Col span={4} >
-          
-          <Row style = {ChildStyle} ><img src={Child} alt="Child görseli" onClick={() => imageClick()} /></Row>
-          
-            
-        </Col>
+      <Row>
         
-        <Col span={4}>
-          
-        <Row style = {ParentStyle}><img src={Parent} alt="Parent görseli" onClick={() => imageClick()}/></Row>
-                
-
-        </Col>
-        <Col span={4}>col-4</Col>
+        <Col flex={2}><Row justify="end" style = {ChildStyle} ><img src={Child} alt="Child görseli" onClick={() => imageClick()} /></Row></Col>
+        <Col flex={1}></Col>
+        <Col flex={2}><Row justify="start" style = {ParentStyle}><img src={Parent} alt="Parent görseli" onClick={() => imageClick()}/></Row></Col>
+      
       </Row>
+
       </body>
     </>
   );

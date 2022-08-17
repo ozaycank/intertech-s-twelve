@@ -6,11 +6,35 @@ import { Button, Divider } from "antd";
 import type { SizeType } from "antd/es/config-provider/SizeContext";
 import React, { useState } from "react";
 import Fox from "../images/MetamaskButton.jsx";
-import Telbg from "../images/pig.svg";
+import Pig from "../images/pig.png";
+
 
 
 
 function Landing() {
+
+  const[walletAddress, setWalletAddress] = useState("");
+
+  async function requestAccount() {
+    console.log("Request account...");
+
+    //is Metamask Exist
+    if ((window as any).ethereum) {
+      console.log("detected");
+
+      try {
+        const accounts = await (window as any).ethereum.request({
+          method: "eth_requestAccounts",
+        });
+        setWalletAddress(accounts);
+      } catch (error) {
+        console.log("Error connecting.");
+      }
+    } else {
+      console.log("Metamask not detected");
+    }
+  }
+
   const bg: CSS.Properties = {
     backgroundColor: "#F8F4DB",
     position: 'relative',
@@ -26,6 +50,8 @@ function Landing() {
     paddingLeft: ' 78px',
 
   };
+
+  
 
   const logoLandingStyle: CSS.Properties = {
     position: 'relative',
@@ -52,9 +78,6 @@ function Landing() {
     marginBottom: '46px',
     marginTop: '26px',
     marginLeft: '53px',
-
-    
- 
   };
 
   const LowerText: CSS.Properties = {
@@ -78,60 +101,38 @@ function Landing() {
 
   };
 
-  
-
-
   return (
-    <>
-      <body style={bg}>
+    <body style={bg}>
 
+      <Row>
+        <Col flex={3}>
+          <Row style={logoLandingStyle}>
+            <Logo />
+          </Row>
 
+          <Row style={UpperText}>
+            <h1>
+              Safely transfer your savings to your loved ones with,{" "}
+              <span style={purpleFontColor}>Intertech's Twelve.</span>{" "}
+            </h1>
+          </Row>
 
-        <Row>
+          <Row style={LowerText}>
+            <h2>
+              The reliable, modern, and innovative way to leave a legacy, start
+              now!
+            </h2>
+          </Row>
 
-          <Col span = {16} >
+          <Row style={ButtonStyle}>
+            <Button onClick={requestAccount}>Connect with Metamask</Button>
+          </Row></Col>
+        <Col flex={2}><Row>
+            <img src={Pig} alt="Pig empty" width="600" height="723"></img>
+          </Row></Col>
+      </Row>
 
-            <Row style = {logoLandingStyle}>
-              <Logo />
-            </Row>
-      
-
-           
-            <Row style={UpperText}>
-              <h1>
-                Safely transfer your savings to your loved ones with,{" "}
-                <span style={purpleFontColor}>Intertech's Twelve</span>{" "}
-              </h1>
-            </Row>
-            
-
-            
-            <Row style={LowerText}>
-              <h2>
-                The reliable, modern, and innovative way to leave a legacy,
-                start now!
-              </h2>
-            </Row>
-            
-
-           
-            <Row>
-              
-                  <Fox/>
-              
-            </Row>
-           
-          </Col>
-
-          <Col span = {8} >
-            <Row>
-                <Telbg/>
-            </Row>
-          </Col>
-        </Row>
-
-      </body>
-    </>
+    </body>
   );
 }
 
