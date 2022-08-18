@@ -9,7 +9,7 @@
     left: 0;
     top: '-103px';
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
     min-width: 1440px;
     padding: 5px 13px;
 }
@@ -152,4 +152,21 @@
     height: 20px;
     margin-top: 7px;
     width: 42px;
+}
+.UbuntuMedium{
+    font-weight: 500;
+    font-style: normal;
+}
+.AvatarImage{
+    color: '#f56a00'; 
+    background-color: rgba(255,183,160,1);
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    left: 1400px;
+    min-height: 29px;
+    padding: 0px 0;
+    position: absolute;
+    top: 50px;
+    width: 28px;
 }
