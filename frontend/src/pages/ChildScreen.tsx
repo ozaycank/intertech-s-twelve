@@ -1,9 +1,16 @@
 import CSS from "csstype";
 import Logo from "../components/Logo";
-import { Col, Row, Button, Divider } from "antd";
+import { Col, Row, Button, Divider,Statistic, Avatar } from "antd";
 import "antd/dist/antd.css";
+import { UserOutlined } from '@ant-design/icons';
 import type { SizeType } from "antd/es/config-provider/SizeContext";
 import React, { useState } from "react";
+import Navbar from "../components/NavBar";
+import type { countdownValueType } from 'antd/es/statistic/utils';
+
+
+const { Countdown } = Statistic;
+const deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30; // Moment is also OK
 
 
 function ChildScreen() {
@@ -55,9 +62,8 @@ function ChildScreen() {
   return (
     <>
       <Row>
-        <Col flex={1}>logo</Col>
-        <Col flex={3}>boşluk</Col>
-        <Col flex={1}>address</Col>
+        <Col flex={1}><Navbar/></Col>
+        <Col flex={1}><Avatar size={64} icon={<UserOutlined />} /></Col>
       </Row>
       <Row>
         <Col flex={2} style = {textBoxStyle}>
@@ -70,7 +76,7 @@ function ChildScreen() {
           <Row>
             <h2 style = {thirdLineStyle}>Time remaining before you can withdraw your balance.</h2>
           </Row>
-          <Row>CountDown</Row>
+          <Row> <Countdown title="Day Level" value={deadline} format="D : H : m : s" /> </Row>
         </Col>
 
         <Col flex={3}>Percentage</Col>

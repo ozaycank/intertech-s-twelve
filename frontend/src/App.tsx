@@ -12,9 +12,8 @@ import ParentScreen from './pages/ParentScreen';
 
 function App() {
   return (
-
  
-      <ParentScreen/>
+      <Login/>
       
   );
 }
