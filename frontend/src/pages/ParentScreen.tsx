@@ -5,35 +5,56 @@ import "antd/dist/antd.css";
 import type { SizeType } from "antd/es/config-provider/SizeContext";
 import React, { useState } from "react";
 
-const historyLineStyle: CSS.Properties = {
-  fontFamily: 'Ubuntu',
-  fontSize: "36px",
-  fontWeight: '500',
-  lineHeight: '41px',
-  letterSpacing: '-0.01em',
-  color: "#4E1DAC",
-};
 
-const lineStyle: CSS.Properties = {
-  position: "absolute",
-  width: "1320px",
-  height: "0px",
-  left: "60px",
-  
-
-  border: "1px solid #4E1DAC"
-}
 
 function ParentScreen() {
 
+  const logoThirdStyle: CSS.Properties = {
+    position: "relative",
+    fontFamily: "Inter, sans-serif",
+    paddingLeft: "1em",
+    marginBottom: "10em",
+    transform: 'scale(0.7)'
+
+  };
+
+  const navbarContainer: CSS.Properties = {
+    position: "relative",
+    height: "8.75em",
+    left: "0px",
+    right: "0px",
+    top: "0px",
+    background: "linear-gradient(270deg, #BEA8F5 0%, rgba(190, 168, 245, 0) 100%)",
+    paddingBottom: "11em",
+  
+  };
+
+  const historyLineStyle: CSS.Properties = {
+    fontFamily: 'Ubuntu',
+    fontSize: "36px",
+    fontWeight: '500',
+    lineHeight: '41px',
+    letterSpacing: '-0.01em',
+    color: "#4E1DAC",
+  };
+  
+  const lineStyle: CSS.Properties = {
+    position: "absolute",
+    width: "1320px",
+    height: "0px",
+    left: "60px",
+    
+  
+    border: "1px solid #4E1DAC"
+  }
 
   return (
     <>
-      <Row>
-        <Col flex={1}>logo</Col>
-        <Col flex={3}>boşluk</Col>
-        <Col flex={1}>address</Col>
-      </Row>
+      <Row style = {navbarContainer}>
+          <Col flex={1} style = {logoThirdStyle}><Logo /></Col>
+          <Col flex={3}>empty</Col>
+          <Col flex={1}>address</Col>
+        </Row>
       
       <Row>
         <Col flex={1}>empty</Col>

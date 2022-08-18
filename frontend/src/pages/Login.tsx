@@ -49,12 +49,12 @@ function Login() {
 
   };
 
-  const logoLandingStyle: CSS.Properties = {
+  const logoLoginStyle: CSS.Properties = {
     position: "relative",
     fontFamily: "Inter, sans-serif",
 
     paddingTop: "3rem",
-    paddingRight: "290px",
+    paddingRight: "18.125em",
     paddingLeft: "10em",
   };
 
@@ -163,7 +163,7 @@ function Login() {
       
 
       <Row>
-      <Col flex={1} style = {logoLandingStyle}><Logo /></Col>
+      <Col flex={1} style = {logoLoginStyle}><Logo /></Col>
       <Col flex={4}></Col>
       </Row>
 

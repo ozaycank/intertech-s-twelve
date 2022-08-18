@@ -15,6 +15,26 @@ const deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30; // Moment is 
 
 function ChildScreen() {
 
+  const logoThirdStyle: CSS.Properties = {
+    position: "relative",
+    fontFamily: "Inter, sans-serif",
+    paddingLeft: "1em",
+    marginBottom: "10em",
+    transform: 'scale(0.7)'
+
+  };
+
+  const navbarContainer: CSS.Properties = {
+    position: "relative",
+    height: "8.75em",
+    left: "0px",
+    right: "0px",
+    top: "0px",
+    background: "linear-gradient(270deg, #BEA8F5 0%, rgba(190, 168, 245, 0) 100%)",
+    paddingBottom: "11em",
+  
+  };
+
   const FirstLineStyle: CSS.Properties = {
     fontFamily: 'Ubuntu',
     fontSize: "36px",
@@ -61,10 +81,11 @@ function ChildScreen() {
 
   return (
     <>
-      <Row>
-        <Col flex={1}><Navbar/></Col>
-        <Col flex={1}><Avatar size={64} icon={<UserOutlined />} /></Col>
-      </Row>
+      <Row style = {navbarContainer}>
+          <Col flex={1} style = {logoThirdStyle}><Logo /></Col>
+          <Col flex={3}>empty</Col>
+          <Col flex={1}>address</Col>
+        </Row>
       <Row>
         <Col flex={2} style = {textBoxStyle}>
           <Row>

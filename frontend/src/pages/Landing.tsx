@@ -65,9 +65,6 @@ function Landing() {
     height: "10.875rem",
     left: "8.188rem",
     top: "19.625rem",
-
-    
-
     lineHeight: "3.625rem",
     marginLeft: "8.188rem",
   };
