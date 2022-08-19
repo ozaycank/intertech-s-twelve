@@ -13,7 +13,7 @@ import ParentScreen from './pages/ParentScreen';
 function App() {
   return (
  
-      <Landing/>
+      <ChildScreen/>
       
   );
 }

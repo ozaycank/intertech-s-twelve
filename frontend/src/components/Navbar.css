@@ -1,55 +1,72 @@
 @import url("https://fonts.googleapis.com/css?famly=Ubuntu:400,700,500|Inter:400,500");
 
-.banner {
-    align-items: center;
-    background: linear-gradient(180deg, rgb(190,168,245) 0%, rgba(190,168,245,0) 100%);
-    position: 'relative';
-    width: '500px';
-    height: '500px';
-    left: 0;
-    top: '-103px';
-    display: flex;
-    justify-content: flex-start;
-    min-width: 1440px;
-    padding: 5px 13px;
-}
-.overlap-group3 {
-    align-self: flex-end;
-    height: 124px;
-    margin-left: 582px;
-    position: relative;
-    width: 503px;
-}
+
 .your-account{
+    top: 20px;
+    width: 2em;
+    left: 80%;
+    min-height: 63px;
     align-items: flex-end;
     display: flex;
-    flex-direction: column;
-    left: 0;
-    min-height: 63px;
+    flex-direction: column; 
     position: absolute;
-    top: 10px;
-    width: 414px;
+    
 }
 .your-account1{
     height: 21px;
     letter-spacing: -0.18px;
     margin-right: 85px;
-    min-width: 112px;
+    min-width: 226px;
     text-align: center;
+    display : flex;
+    flex-direction: column;
+    align-items: center;
+    top: 28px;
+    font-family: Ubuntu;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 21px;
+    letter-spacing: -0.01em;
+
 }
 .MetamaskId{
+    align-items: flex-end;
     align-self: flex-end;
     height: 21px;
-    letter-spacing: -0.18px;
-    min-width: 480px;
-    text-align: center;
+    min-width: 408px;
+    left: 300px;
+    top: 49px;
+    border-radius: nullpx;
+    text-align: flex-end;
     margin-right: 35px;
+    font-family: Ubuntu;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 21px;
+    letter-spacing: -0.01em;
+
 }
 .AccountBalance{
     height: 21px;
     letter-spacing: -0.18px;
     margin-right: 80px;
     min-width: 218px;
+    text-align: center;
+}
+.UbuntuMedium{
+    font-family: Ubuntu;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 21px;
+    letter-spacing: -0.01em;
+    text-align: center;
+}
+.UbuntuBold{
+    font-family: Ubuntu;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 21px;
+    letter-spacing: -0.01em;
     text-align: center;
 }
 .overlap-group2{
@@ -66,9 +83,9 @@
     background: linear-gradient(180deg, rgb(225,225,225) 0%, rgba(225,225,225,0) 100%);
     border-radius: 40px;
     height: 43px;
-    left: 0;
+    left: -130%;
     position: absolute;
-    top: 81px;
+    top: 80%;
     width: 132px;
 
 }
@@ -77,7 +94,7 @@
     left: 2px;
     mix-blend-mode: overlay;
     position: absolute;
-    top: 1px;
+    top: 2px;
     width: 128px;
     align-self: flex-end;
     letter-spacing: -0.18px;
@@ -85,85 +102,40 @@
     font-size: large;
     font-family: sans-serif;
     margin-right: 200px;
+    height: 40px;
+    border-radius: 40px;
+
 }
 .userAvatar{
     -webkit-backdrop-filter: blur(12px) brightness(100%);
-    align-items: flex-start;
+    align-items: flex-end;
     backdrop-filter: blur(12px) brightness(100%);
     background-color: white;
     border-radius: 41px/41.22px;
     display: flex;
     height: 70px;
-    left: 340px;
+    left: 80%;
     min-width: 70px;
-    position: absolute;
-    top: -30px;
+    top: 33px;
     padding: 17px 13px;
     box-shadow: inset -2px 2px 12px #00000040, inset -2px 2px 12px #00000040, -2px 2px 12px #00000040;
-}
-.childContainer{
-    height: 48px;
-    position: relative;
-    width: 56px;
-}
-.child-back{
+    color: pink; 
     align-items: center;
     display: flex;
     flex-direction: column;
-    left: 28px;
-    min-height: 29px;
-    padding: 0px 0;
+    min-height: 50px;
+    padding: 0px 20px;
     position: absolute;
-    top: 14px;
     width: 28px;
 }
-.ellipse-14{
-    background: linear-gradient(180deg, rgb(225,183,160) 0%, rgba(200,189,243) 100%);
-    border-radius: 6.74px/6.3px;
-    height: 13px;
-    margin-left: 0;
-    width: 13px;
-}
-.Subtract{
-    height: 12px;
-    margin-top: 4px;
-    width: 28px;
-}
-.ChildFront{
-    box-shadow: inset 0px -2px 10px #c1bbd94c, inset -2px 2px 10px #c5b9f2, 2px -2px 12px #a694c880;   
-    align-items: center;   
-    display: flex;
-    min-height: 48px;
-    left: 0;
-    width: 42px;
-    position: absolute;
-    top: 0;
-    padding: 17px 13px;   
-    flex-direction: column;
-}
-.ellipse-14-1{
-    background-color: rgba(255,183,160,1);
-    border-radius: 10.04px/10.43px;
-    height: 21px;
-    margin-left: 0;
-    width: 20px;
-}
-.SubtractFront{
-    height: 20px;
-    margin-top: 7px;
-    width: 42px;
-}
-.UbuntuMedium{
-    font-weight: 500;
-    font-style: normal;
-}
+
 .AvatarImage{
     color: '#f56a00'; 
     background-color: rgba(255,183,160,1);
     align-items: center;
     display: flex;
     flex-direction: column;
-    left: 1400px;
+    left: 100%;
     min-height: 29px;
     padding: 0px 0;
     position: absolute;
