@@ -1,6 +1,7 @@
 import { Pie } from "@ant-design/charts";
 import React from "react";
 import styled from "styled-components";
+import "./PieChart.css";
 
 
 const Wrapper = styled.div`
