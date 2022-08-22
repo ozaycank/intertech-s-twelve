@@ -9,6 +9,7 @@ import Navbar from "../components/NavBar";
 import type { countdownValueType } from 'antd/es/statistic/utils';
 import PieChart from "../components/PieChart";
 import HistoryTable from "../components/HistoryTable";
+import Clock from "../images/ClockIcon.svg";
 
 
 const { Countdown } = Statistic;
@@ -149,6 +150,8 @@ function ChildScreen() {
     lineHeight: '41px',
     letterSpacing: '-0.01em',
     color: "#000000",
+
+    paddingBottom: "4em",
   };
 
 
@@ -159,12 +162,19 @@ function ChildScreen() {
     lineHeight: '21px',
     letterSpacing: '-0.01em',
     color: "#000000",
+    
   };
 
-  const textBoxContainer: CSS.Properties = {
-    marginTop: "203px",
-    marginLeft: "60px",
-    marginBottom: "93px",
+  const textsContainer: CSS.Properties = {
+
+    padding: "8em 0 0 22em",
+
+  };
+
+  const middlePartContainer: CSS.Properties = {
+    marginTop: "1em",
+    marginLeft: "2em",
+    marginBottom: "5.813em",
   };
 
 
@@ -176,7 +186,7 @@ function ChildScreen() {
     letterSpacing: "-0.01em",
     color: "#4E1DAC",
     marginLeft: "5em",
-    marginTop: "2em",
+    marginTop: "0.2em",
   };
 
   const historyLineStyle: CSS.Properties = {
@@ -190,6 +200,11 @@ function ChildScreen() {
    marginTop: "4em",
   };
 
+  const clockStyle: CSS.Properties = {
+    marginRight: "2em",
+   };
+ 
+
   return (
     <>
       <Row style = {navbarContainer}>
@@ -199,10 +214,9 @@ function ChildScreen() {
         </Row>
 
 
-      <Row style = {textBoxContainer}>
-
-
-        <Col flex={2}>
+      <Row justify = "center">
+        
+        <Col flex={2} style = {textsContainer}>
           <Row>
             <h1 style = {FirstLineStyle}>Your Account Information</h1>
           </Row>
@@ -212,11 +226,11 @@ function ChildScreen() {
           <Row>
             <h2 style = {thirdLineStyle}>Time remaining before you can withdraw your balance.</h2>
           </Row>
-          <Row> <Countdown title="Day Level" value={deadline} format="D : H : m : s" /> </Row>
+          <Row><img style = {clockStyle} src={Clock} alt="Clock img"/> <Countdown title="Day Level" value={deadline} format="D : H : m : s" /> </Row>
         </Col>
 
         <Col flex={3}><PieChart/></Col>
-
+      
 
       </Row>
      

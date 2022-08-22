@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 
 const Wrapper = styled.div`
-  margin: 64px 32px;
+  margin: 4em;
 `;
 
 type DataType = "0x3696656EC7ab88b098defB751B7401B5f6d8976F" | "0x3696656EC7ab88b098defB751B7401B5f6d8976G" | "0x3696656EC7ab88b098defB751B7401B5f6d8976H";
@@ -35,7 +35,7 @@ const config = {
   data: pieChartData,
   angleField: "value",
   colorField: "type",
-  radius: 1,
+  radius: 0.8,
   innerRadius: 0.5,
   label: {
     type: "inner",
@@ -56,7 +56,7 @@ const config = {
         textOverflow: "ellipsis"
       },
       formatter: function formatter() {
-        return `TOTAL\n3.02 ETH`;
+        return `3.02 ETH`;
       }
     }
   }
@@ -64,7 +64,7 @@ const config = {
 
 function PieChart() {
   return (
-    <Wrapper>
+    <Wrapper style = {{width: "40em"}}>
       <Pie {...config} />
     </Wrapper>
   );
