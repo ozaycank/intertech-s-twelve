@@ -5,7 +5,7 @@ import "./PieChart.css";
 
 
 const Wrapper = styled.div`
-  margin: "1em 1em 0 0";
+  margin: "1em 0 0 0";
 `;
 
 type DataType = "0x3696656EC7ab88b098defB751B7401B5f6d8976F" | "0x3696656EC7ab88b098defB751B7401B5f6d8976G" | "0x3696656EC7ab88b098defB751B7401B5f6d8976H";
@@ -37,7 +37,7 @@ const config = {
   angleField: "value",
   colorField: "type",
   radius: 0.8,
-  innerRadius: 0.5,
+  innerRadius: 0.6,
   label: {
     type: "inner",
     offset: "-50%",
@@ -65,7 +65,7 @@ const config = {
 
 function PieChart() {
   return (
-    <Wrapper style = {{width: "40em"}}>
+    <Wrapper style = {{width: "30em"}}>
       <Pie {...config} />
     </Wrapper>
   );

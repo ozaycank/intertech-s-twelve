@@ -126,9 +126,6 @@ function ChildScreen() {
   const navbarContainer: CSS.Properties = {
     position: "relative",
     height: "8.75em",
-    left: "0px",
-    right: "0px",
-    top: "0px",
     background: "linear-gradient(270deg, #BEA8F5 0%, rgba(190, 168, 245, 0) 100%)",
     paddingBottom: "11em",
   
@@ -167,7 +164,7 @@ function ChildScreen() {
 
   const textsContainer: CSS.Properties = {
 
-    padding: "8em 0 0 10em",
+    padding: "8em 8em 0 8em",
 
   };
 
@@ -197,7 +194,7 @@ function ChildScreen() {
   };
 
   const tableStyle: CSS.Properties = {
-   marginTop: "4em",
+   margin: "4em 4em 0 1em",
   };
 
   const clockStyle: CSS.Properties = {
@@ -207,10 +204,11 @@ function ChildScreen() {
    const glassContainer: CSS.Properties = {
     position: "relative",
     height: "30em",
-    width: "30em", 
+    width: "40em", 
    
-    marginTop:"4em",
-    marginRight:"20em",  
+    margin:"4em 10em 0 2em",
+  
+    
 
     backdropFilter: "blur(20px)",
     background:
@@ -224,14 +222,14 @@ function ChildScreen() {
     <>
       <Row style = {navbarContainer}>
           <Col flex={1} style = {logoThirdStyle}><Logo /></Col>
-          <Col flex={3}>empty</Col>
-          <Col flex={1}>address</Col>
+          <Col flex={2}></Col>
+          <Col flex={1}></Col>
         </Row>
 
 
       <Row justify = "center">
-        
-        <Col flex={2} style = {textsContainer}>
+      
+        <Col style = {textsContainer}>
           <Row>
             <h1 style = {FirstLineStyle}>Your Account Information</h1>
           </Row>
@@ -244,9 +242,9 @@ function ChildScreen() {
           <Row><img style = {clockStyle} src={Clock} alt="Clock img"/> <Countdown title="Day Level" value={deadline} format="D : H : m : s" /> </Row>
         </Col>
 
-        <Col flex={3} style = {glassContainer}><PieChart/></Col>
+        <Col style = {glassContainer}><PieChart/></Col>
       
-
+        
       </Row>
      
         <Row> 
@@ -258,9 +256,9 @@ function ChildScreen() {
           
 
         <Row justify = "center">
-          <Col flex={1.2}></Col>
+          <Col flex={1}></Col>
           <Col flex={1} style = {tableStyle}><HistoryTable data={data}/></Col>
-          <Col flex={2}></Col>
+          <Col flex={1}></Col>
         </Row>
     </>
   );
