@@ -167,7 +167,7 @@ function ChildScreen() {
 
   const textsContainer: CSS.Properties = {
 
-    padding: "8em 0 0 22em",
+    padding: "8em 0 0 10em",
 
   };
 
@@ -185,14 +185,14 @@ function ChildScreen() {
     lineHeight: "41px",
     letterSpacing: "-0.01em",
     color: "#4E1DAC",
-    marginLeft: "5em",
+    marginLeft: "4em",
     marginTop: "0.2em",
   };
 
   const historyLineStyle: CSS.Properties = {
     position: "absolute",
-    width: "110em",
-    left: "13em",
+    width: "80em",
+    left: "10em",
     border: "1px solid #4E1DAC",
   };
 
@@ -209,9 +209,6 @@ function ChildScreen() {
     height: "30em",
     width: "30em", 
    
-    display: "flex",
-    justifyContent: "center",
-    
     marginTop:"4em",
     marginRight:"20em",  
 
@@ -252,7 +249,7 @@ function ChildScreen() {
 
       </Row>
      
-      <Row> 
+        <Row> 
           <h1 style = {histTextStyle}>Transaction History</h1>
         </Row> 
         <Row>
@@ -260,10 +257,10 @@ function ChildScreen() {
         </Row>
           
 
-        <Row>
-          <Col flex={1}></Col>
-          <Col flex={3} style = {tableStyle}><HistoryTable data={data}/></Col>
-          <Col flex={1}></Col>
+        <Row justify = "center">
+          <Col flex={1.2}></Col>
+          <Col flex={1} style = {tableStyle}><HistoryTable data={data}/></Col>
+          <Col flex={2}></Col>
         </Row>
     </>
   );
