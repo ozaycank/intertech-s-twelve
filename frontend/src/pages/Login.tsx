@@ -53,20 +53,21 @@ function Login() {
     position: "relative",
     fontFamily: "Inter, sans-serif",
 
-    paddingTop: "3rem",
+    paddingTop: "1rem",
     paddingRight: "18.125em",
-    paddingLeft: "10em",
+    paddingLeft: "8em",
   };
 
  const FYI: CSS.Properties = {
     fontFamily: "Ubuntu, sans-serif",
-    marginTop: '-40px',
+    marginTop: '-1px',
     paddingBottom: '20px',
+    marginLeft: "2em",
  };
 
   const ChildStyle: CSS.Properties = {
     fontFamily: "Ubuntu, sans-serif",
-   marginBottom: '10px',
+    marginBottom: '10px',
 
   };
 

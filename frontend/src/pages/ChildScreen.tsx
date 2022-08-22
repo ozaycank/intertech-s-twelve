@@ -5,11 +5,12 @@ import "antd/dist/antd.css";
 import { UserOutlined } from '@ant-design/icons';
 import type { SizeType } from "antd/es/config-provider/SizeContext";
 import React, { useState } from "react";
-import Navbar from "../components/NavBar";
+
 import type { countdownValueType } from 'antd/es/statistic/utils';
 import PieChart from "../components/PieChart";
 import HistoryTable from "../components/HistoryTable";
 import Clock from "../images/ClockIcon.svg";
+import NavBar from "../components/NavBar";
 
 
 const { Countdown } = Statistic;
@@ -164,16 +165,9 @@ function ChildScreen() {
 
   const textsContainer: CSS.Properties = {
 
-    padding: "8em 8em 0 8em",
+    padding: "8em 8em 0 4em",
 
   };
-
-  const middlePartContainer: CSS.Properties = {
-    marginTop: "1em",
-    marginLeft: "2em",
-    marginBottom: "5.813em",
-  };
-
 
   const histTextStyle: CSS.Properties = {
     fontFamily: "Ubuntu",
@@ -188,13 +182,13 @@ function ChildScreen() {
 
   const historyLineStyle: CSS.Properties = {
     position: "absolute",
-    width: "80em",
-    left: "10em",
+    width: "82%",
+    left: "9em",
     border: "1px solid #4E1DAC",
   };
 
   const tableStyle: CSS.Properties = {
-   margin: "4em 4em 0 1em",
+   margin: "4em 4em 0 4em",
   };
 
   const clockStyle: CSS.Properties = {
@@ -206,7 +200,7 @@ function ChildScreen() {
     height: "30em",
     width: "40em", 
    
-    margin:"4em 10em 0 2em",
+    margin:"4em 10em 0 4em",
   
     
 
@@ -223,7 +217,7 @@ function ChildScreen() {
       <Row style = {navbarContainer}>
           <Col flex={1} style = {logoThirdStyle}><Logo /></Col>
           <Col flex={2}></Col>
-          <Col flex={1}></Col>
+          <Col flex={1}><NavBar addr="0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266" balance="1.02" /></Col>
         </Row>
 
 
@@ -257,7 +251,7 @@ function ChildScreen() {
 
         <Row justify = "center">
           <Col flex={1}></Col>
-          <Col flex={1} style = {tableStyle}><HistoryTable data={data}/></Col>
+          <Col flex={2} style = {tableStyle}><HistoryTable data={data}/></Col>
           <Col flex={1}></Col>
         </Row>
     </>

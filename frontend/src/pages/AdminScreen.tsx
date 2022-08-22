@@ -158,9 +158,9 @@ function AdminScreen() {
     position: "relative",
     marginTop: "2em",
     height: "10em",
-    width: "7em",
+    width: "8.5em",
 
-    padding: "1px",
+    padding: "20px",
     backdropFilter: "blur(20px)",
     background: "linear-gradient(105.69deg, #FFFFFF 1.97%, rgba(255, 255, 255, 0) 200%)",
     boxShadow: "-2px 2px 12px rgba(0, 0, 0, 0.25), inset -2px 2px 2px rgba(0, 0, 0, 0.1)",
@@ -171,28 +171,30 @@ function AdminScreen() {
   const leftUpperTextStyle: CSS.Properties = {
     position: "relative",
     transform: "translate(12%, 30%)",
+    margin: "0 0 0 1.5em",
 
   };
 
   const leftLowerTextStyle: CSS.Properties = {
     position: "relative",
-    transform: "translate(50%, 30%)",
+    
 
     fontFamily: 'Ubuntu',
     fontStyle: "normal",
     fontWeight: "bold",
-    fontSize: "1.5rem",
+    fontSize: "1rem",
     lineHeight: "2rem",
     display: "flex",
     alignItems: "center",
     textAlign: "center",
     letterSpacing: "-0.01em",
+
   };
 
   const rightGlassContainer: CSS.Properties = {
     position: "relative",
     height: "10em",
-    width: "7em",
+    width: "8.5em",
     left: "0px",
     right: "0px",
     top: "0px",
@@ -209,19 +211,19 @@ function AdminScreen() {
   const rightUpperTextStyle: CSS.Properties = {
     position: "relative",
     transform: "translate(20%)",
+    margin: "0 3.72em 0 0",
 
   };
 
   const rightLowerTextStyle: CSS.Properties = {
     position: "relative",
-    transform: "translate(23%)",
+
 
     fontFamily: 'Ubuntu',
     fontStyle: "normal",
     fontWeight: "bold",
-    fontSize: "1.5rem",
+    fontSize: "1rem",
     lineHeight: "2rem",
-    display: "flex",
     alignItems: "center",
     textAlign: "center",
     letterSpacing: "-0.01em",
@@ -236,26 +238,22 @@ function AdminScreen() {
     width: "400px",
     marginLeft: "3em",
     marginBottom: "2.5em",
-  };
-
-  
-
-  
+  }; 
 
   return (
     <>
         <Row style = {navbarContainer}>
           <Col flex={1} style = {logoThirdStyle}><Logo /></Col>
           <Col flex={3}>-</Col>
-          <Col flex={1}><NavBar/></Col>
+          <Col flex={1}><NavBar addr="0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266" balance="1.02" /></Col>
         </Row>
 
         <Row>
           <Col flex={1}></Col>
             <Col flex={1} style = {leftGlassContainer}>
                   
-                  <Row  style = {leftUpperTextStyle}><h1>TOTAL TRANSACTIONS</h1></Row>
-                  <Row  style = {leftLowerTextStyle}><h1>9</h1></Row>
+                  <Row  justify="center"><h1>TOTAL TRANSFER</h1></Row>
+                  <Row  justify="center" style = {leftLowerTextStyle}><h1>9</h1></Row>
             
             </Col>
           <Col flex={1} style = {adminBoxStyle}>
@@ -264,8 +262,8 @@ function AdminScreen() {
             </Col>
         <Col flex={1} style = {rightGlassContainer}>
           
-          <Row  style = {rightUpperTextStyle}><h1>TOTAL AMOUNT</h1></Row>
-          <Row  style = {rightLowerTextStyle}><h1>128 ETH</h1></Row>
+          <Row  justify="center"><h1>TOTAL AMOUNT</h1></Row>
+          <Row  justify="center" style = {rightLowerTextStyle}><h1>128 ETH</h1></Row>
         </Col>
           <Col flex={1}></Col>
         </Row>

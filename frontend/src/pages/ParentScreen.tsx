@@ -191,7 +191,7 @@ function ParentScreen() {
   //receiverlar için container
 
   const middleContainer: CSS.Properties = {
-    margin: "3em 6em 2.25em 20em",
+    margin: "3em 6em 2.25em 14em",
   };
 
   const addNewReceiverStyle: CSS.Properties = {
@@ -209,21 +209,19 @@ function ParentScreen() {
     lineHeight: "41px",
     letterSpacing: "-0.01em",
     color: "#4E1DAC",
-    marginLeft: "5em",
+    marginLeft: "3em",
     marginTop: "2em",
   };
 
   const historyLineStyle: CSS.Properties = {
     position: "absolute",
-    width: "80.4%",
-    left: "9.7%",
+    width: "87%",
+    left: "6.4%",
     border: "1px solid #4E1DAC",
   };
 
   const tableStyle: CSS.Properties = {
     marginTop: "4em",
-
-    
   };
 
   // exchange,amount ve transfer için container
@@ -243,7 +241,7 @@ function ParentScreen() {
     fontWeight: "bold",
     lineHeight: "41px",
 
-    paddingLeft: "10em",
+    margin: "2em 4em 0 4em",
   
     };
 
@@ -253,7 +251,7 @@ function ParentScreen() {
 
     
     marginBottom: "10em",
-    marginLeft: "12em",
+   
   };
 
 
@@ -263,8 +261,8 @@ function ParentScreen() {
         <Col flex={1} style={logoThirdStyle}>
           <Logo />
         </Col>
-        <Col flex={3}>empty</Col>
-        <Col flex={1}>address</Col>
+        <Col flex={3}></Col>
+        <Col flex={1}><NavBar addr="0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266" balance="1.02" /></Col>
       </Row>
 
       <Row>

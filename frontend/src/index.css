@@ -23,6 +23,7 @@ code {
   
 }
 
+/* arka planı rengi F8F4DB */
 .table-striped-rows tr:nth-child(2n) td {
   background-color: #fcfcfc;
 

@@ -3,20 +3,25 @@ import React from "react";
 import "./Navbar.css";
 import { UserOutlined } from "@ant-design/icons";
 
-function NavBar() {
+interface NavbarProps {
+  addr: string;
+  balance: string;
+}
+
+const NavBar:React.FC<NavbarProps> = ({ addr, balance }) =>  {
   return (
-    <div>
+    <div className = "container">
         <div className="your-account">
           <div className="your-account1">
             Your Account
           </div>
           <span className="MetamaskId">
-            0xb794f5ea0ba39494ce839613fffba74279579268
+            {addr}
           </span>
           <div className="AccountBalance">
             <span>
               <span className="UbuntuMedium">Account Balance: </span>
-              <span className="UbuntuBold">1.02 ETH </span>
+              <span className="UbuntuBold">{balance} ETH </span>
             </span>
           </div>
         </div>

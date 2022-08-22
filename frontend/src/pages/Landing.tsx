@@ -7,7 +7,8 @@ import type { SizeType } from "antd/es/config-provider/SizeContext";
 import React, { useState } from "react";
 import Fox from "../images/MetamaskFox.svg";
 import Pig from "../images/pig.png";
-
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Login from './Login';
 
 
 
@@ -27,6 +28,7 @@ function Landing() {
           method: "eth_requestAccounts",
         });
         setWalletAddress(accounts);
+        
       } catch (error) {
         console.log("Error connecting.");
       }
@@ -38,9 +40,8 @@ function Landing() {
   const logoLandingStyle: CSS.Properties = {
     position: 'relative',
     fontFamily: "Inter, sans-serif",
-   
-    marginBottom: '1.625rem',
-    marginLeft: "8.188rem",
+    margin: "0 0 1.625em 7em",
+  
     
   };
 
@@ -63,8 +64,6 @@ function Landing() {
   const upperTextBox: CSS.Properties = {
     width: "42.063rem",
     height: "10.875rem",
-    left: "8.188rem",
-    top: "19.625rem",
     lineHeight: "3.625rem",
     marginLeft: "8.188rem",
   };
@@ -73,7 +72,6 @@ function Landing() {
     fontSize: "1.5rem",
     fontWeight: "bold",
     fontFamily: "Inter, sans-serif",
-
     letterSpacing: "-0.01em",
     
   };
@@ -81,9 +79,6 @@ function Landing() {
   const lowerTextBox: CSS.Properties = {
     width: "25.625rem",
     height: "4.25rem",
-    left: "8.25rem",
-    top: "33.375rem",
-
     lineHeight: "1.813rem",
     marginLeft: "8.188rem",
   };
@@ -97,13 +92,9 @@ function Landing() {
   };
 
   const buttonBox: CSS.Properties = {
-    width: "52.063rem",
-    height: "9.934rem",
-    left: "4.875rem",
-    top: "41.688rem",
-
+    width: "45rem",
     marginTop: "4.063rem",
-    marginLeft: "8.188rem",
+    marginLeft: "4rem",
   };
 
   const buttonText: CSS.Properties = {
@@ -113,9 +104,7 @@ function Landing() {
       transform: "translate(-50%, -50%)",
       fontSize: "3rem",
       lineHeight: "3.625rem",
-      
       textShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-
   };
 
   const pigStyle: CSS.Properties = {
@@ -129,42 +118,36 @@ function Landing() {
   
   };
 
-  const upperBox: CSS.Properties = {
-
-    height: "7.813rem",
-
+  const leftContainer:  CSS.Properties = {
+    width: "3rem",
+ 
   };
 
-  const lowerBox:  CSS.Properties = {
-    height: "5rem",
+  const rightContainer:  CSS.Properties = {
+    width: "47%",
+    margin: "0 0 0 50em"
   };
 
-  const rightBox:  CSS.Properties = {
-    width: "4.875rem",
+  const bigContainer:  CSS.Properties = {
+    transform: "translate(0.0001%, 15%)",
+    margin: "0 0 0 0"
   };
-
-  const leftBox:  CSS.Properties = {
-    width: "3.926rem",
-  };
+  
 
   return (
     <>
-      <Row style = {upperBox}></Row>
+     
 
-      <Row>
-
-        <Col style = {rightBox}></Col>
-
-        <Col>
+      <Row justify = "center" style = {bigContainer}>
+        
+        <Col style = {leftContainer}> 
           <Row style = {logoLandingStyle}>
-            {" "}
-            <Logo />{" "}
+            <Logo />
           </Row>
           <Row style = {upperTextBox}>
-            {" "}
             <h1 style = {upperText} >
-              Safely transfer your savings to your loved ones with,{" "}
-              <span style={innerText}>Intertech's Twelve.</span>{" "}
+              Safely transfer your savings to your loved ones with,
+              <span style={innerText}>Intertech's Twelve.</span>
             </h1>
           </Row>
           <Row style = {lowerTextBox}>
@@ -174,12 +157,12 @@ function Landing() {
             </h2>
           </Row>
           <Row style = {buttonBox}>
-            {" "}
-            <Button style = {buttonStyle} onClick={requestAccount}> <span style = {buttonText}>Connect with Metamask <img style = {foxStyle} src={Fox} alt="metamask fox" /> </span> </Button>
+            
+            <Button style = {buttonStyle} onClick={requestAccount}>  <span style = {buttonText}>Connect with Metamask <img style = {foxStyle} src={Fox} alt="metamask fox" /> </span> </Button>
           </Row>
         </Col>
 
-        <Col>
+        <Col style = {rightContainer}>
           <img
             src={Pig}
             style={pigStyle}
@@ -189,10 +172,7 @@ function Landing() {
           ></img>
         </Col>
 
-        <Col style = {leftBox} ></Col>
       </Row>
-
-      <Row style = {lowerBox} ></Row>
     </>
   );
 }

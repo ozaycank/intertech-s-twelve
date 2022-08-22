@@ -1,44 +1,46 @@
 @import url("https://fonts.googleapis.com/css?famly=Ubuntu:400,700,500|Inter:400,500");
 
-
+/* yazıların hepsi */
 .your-account{
-    top: 20px;
-    width: 2em;
-    left: 80%;
-    min-height: 63px;
+    top: 1.25em;
+    width: 0em;
+    left: 50%;
+    min-height: 3em;
     align-items: flex-end;
     display: flex;
     flex-direction: column; 
     position: absolute;
+    margin-left: 1em;
     
 }
+
+/*sadece your acc yazısı*/
 .your-account1{
-    height: 21px;
-    letter-spacing: -0.18px;
-    margin-right: 85px;
-    min-width: 226px;
+    height: 1,3em;
+    margin-right: 0.8em;
+    min-width: 14em;
     text-align: center;
     display : flex;
     flex-direction: column;
     align-items: center;
-    top: 28px;
+    top: 1,3em;
     font-family: Ubuntu;
     font-size: 18px;
     font-weight: 700;
-    line-height: 21px;
+    line-height: 1,25em;
     letter-spacing: -0.01em;
+    
 
 }
+
+/*address*/
 .MetamaskId{
     align-items: flex-end;
     align-self: flex-end;
-    height: 21px;
-    min-width: 408px;
-    left: 300px;
-    top: 49px;
+    height: 1,3em;
     border-radius: nullpx;
     text-align: flex-end;
-    margin-right: 35px;
+    margin-right: 4.6em;
     font-family: Ubuntu;
     font-size: 18px;
     font-weight: 500;
@@ -46,6 +48,8 @@
     letter-spacing: -0.01em;
 
 }
+
+/*3. satır acc balance yazısı*/
 .AccountBalance{
     height: 21px;
     letter-spacing: -0.18px;
@@ -53,6 +57,7 @@
     min-width: 218px;
     text-align: center;
 }
+
 .UbuntuMedium{
     font-family: Ubuntu;
     font-size: 18px;
@@ -61,6 +66,7 @@
     letter-spacing: -0.01em;
     text-align: center;
 }
+
 .UbuntuBold{
     font-family: Ubuntu;
     font-size: 18px;
@@ -69,14 +75,14 @@
     letter-spacing: -0.01em;
     text-align: center;
 }
+
 .overlap-group2{
     top: 0;
     height: 124px;
-    left: 291px;
-    position: absolute;
-    width: 212px;
- 
+    position: relative;
+    width: 20em;
 }
+
 .overlap-group{
     -webkit-backdrop-filter: blur(20px) brightness(100%);
     backdrop-filter: blur(20px) brightness(100%);
@@ -84,16 +90,17 @@
     border-radius: 40px;
     height: 43px;
     left: -130%;
-    position: absolute;
+    position: relative;
     top: 80%;
     width: 132px;
-
+    left: 20%;
 }
+
 .LogOutButton{
     height: 39px;
     left: 2px;
     mix-blend-mode: overlay;
-    position: absolute;
+    position: relative;
     top: 2px;
     width: 128px;
     align-self: flex-end;
@@ -104,41 +111,21 @@
     margin-right: 200px;
     height: 40px;
     border-radius: 40px;
-
 }
+
 .userAvatar{
     -webkit-backdrop-filter: blur(12px) brightness(100%);
-    align-items: flex-end;
     backdrop-filter: blur(12px) brightness(100%);
     background-color: white;
     border-radius: 41px/41.22px;
-    display: flex;
-    height: 70px;
-    left: 80%;
-    min-width: 70px;
-    top: 33px;
-    padding: 17px 13px;
+    left: 40%;
+    min-width: 2.3em;
+    top: 6%;
     box-shadow: inset -2px 2px 12px #00000040, inset -2px 2px 12px #00000040, -2px 2px 12px #00000040;
     color: pink; 
     align-items: center;
     display: flex;
     flex-direction: column;
-    min-height: 50px;
     padding: 0px 20px;
     position: absolute;
-    width: 28px;
-}
-
-.AvatarImage{
-    color: '#f56a00'; 
-    background-color: rgba(255,183,160,1);
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    left: 100%;
-    min-height: 29px;
-    padding: 0px 0;
-    position: absolute;
-    top: 50px;
-    width: 28px;
 }
