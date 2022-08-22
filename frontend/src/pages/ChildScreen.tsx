@@ -204,6 +204,24 @@ function ChildScreen() {
     marginRight: "2em",
    };
  
+   const glassContainer: CSS.Properties = {
+    position: "relative",
+    height: "30em",
+    width: "30em", 
+   
+    display: "flex",
+    justifyContent: "center",
+    
+    marginTop:"4em",
+    marginRight:"20em",  
+
+    backdropFilter: "blur(20px)",
+    background:
+      "linear-gradient(105.69deg, #FFFFFF 1.97%, rgba(255, 255, 255, 0) 200%)",
+    boxShadow:
+      "-2px 2px 12px rgba(0, 0, 0, 0.25), inset -2px 2px 2px rgba(0, 0, 0, 0.1)",
+    borderRadius: "2.5rem",
+  };
 
   return (
     <>
@@ -229,7 +247,7 @@ function ChildScreen() {
           <Row><img style = {clockStyle} src={Clock} alt="Clock img"/> <Countdown title="Day Level" value={deadline} format="D : H : m : s" /> </Row>
         </Col>
 
-        <Col flex={3}><PieChart/></Col>
+        <Col flex={3} style = {glassContainer}><PieChart/></Col>
       
 
       </Row>

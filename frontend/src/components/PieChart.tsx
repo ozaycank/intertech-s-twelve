@@ -5,7 +5,7 @@ import "./PieChart.css";
 
 
 const Wrapper = styled.div`
-  margin: 4em;
+  margin: "1em 1em 0 0";
 `;
 
 type DataType = "0x3696656EC7ab88b098defB751B7401B5f6d8976F" | "0x3696656EC7ab88b098defB751B7401B5f6d8976G" | "0x3696656EC7ab88b098defB751B7401B5f6d8976H";
