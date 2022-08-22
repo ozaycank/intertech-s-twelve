@@ -42,11 +42,8 @@ function Landing() {
   };
 
   const logoLandingStyle: CSS.Properties = {
-    position: 'relative',
     fontFamily: "Inter, sans-serif",
-    margin: "0 0 1.625em 7em",
-  
-    
+    margin: "9em 0 1.625em 5em",
   };
 
   const innerText: CSS.Properties = {
@@ -54,7 +51,7 @@ function Landing() {
     fontFamily: "Inter",
     fontSize: "3rem",
     fontWeight: "1200",
-    lineHeight: "3.625rem",
+    lineHeight: "4rem",
   };
 
   const upperText: CSS.Properties = {
@@ -68,8 +65,8 @@ function Landing() {
   const upperTextBox: CSS.Properties = {
     width: "42.063rem",
     height: "10.875rem",
-    lineHeight: "3.625rem",
-    marginLeft: "8.188rem",
+    lineHeight: "4rem",
+    marginLeft: "6rem",
   };
 
   const lowerText: CSS.Properties = {
@@ -84,7 +81,7 @@ function Landing() {
     width: "25.625rem",
     height: "4.25rem",
     lineHeight: "1.813rem",
-    marginLeft: "8.188rem",
+    marginLeft: "6rem",
   };
 
   const buttonStyle: CSS.Properties = {
@@ -113,45 +110,29 @@ function Landing() {
 
   const pigStyle: CSS.Properties = {
     transform: 'scale(1.2)',
-    marginLeft: '1.2rem',
+    marginTop: "9em",
   };
 
   const foxStyle: CSS.Properties = {
     transform: 'scale(2.2)',
-    marginLeft: "2.5rem",
+    marginLeft: "2rem",
   
   };
-
-  const leftContainer:  CSS.Properties = {
-    width: "3rem",
- 
-  };
-
-  const rightContainer:  CSS.Properties = {
-    width: "47%",
-    margin: "0 0 0 50em"
-  };
-
-  const bigContainer:  CSS.Properties = {
-    transform: "translate(0.0001%, 15%)",
-    margin: "0 0 0 0"
-  };
-  
 
   return (
     <>
      
 
-      <Row justify = "center" style = {bigContainer}>
+      <Row justify = "center" >
         
-        <Col style = {leftContainer}> 
+        <Col> 
           <Row style = {logoLandingStyle}>
             <Logo />
           </Row>
           <Row style = {upperTextBox}>
             <h1 style = {upperText} >
               Safely transfer your savings to your loved ones with,
-              <span style={innerText}>Intertech's Twelve.</span>
+              <span style={innerText}> Intertech's Twelve.</span>
             </h1>
           </Row>
           <Row style = {lowerTextBox}>
@@ -162,14 +143,11 @@ function Landing() {
             
           </Row>
           <Row style = {buttonBox}>
-
-
-            
             <Button style = {buttonStyle} onClick={requestAccount}>  <span style = {buttonText}>Connect with Metamask <img style = {foxStyle} src={Fox} alt="metamask fox" /> </span> </Button>
           </Row>
         </Col>
 
-        <Col style = {rightContainer}>
+        <Col>
           <img
             src={Pig}
             style={pigStyle}
