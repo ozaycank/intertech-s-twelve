@@ -7,14 +7,21 @@ import AdminScreen from './pages/AdminScreen';
 import ChildScreen from './pages/ChildScreen';
 import ParentScreen from './pages/ParentScreen';
 
+import {BrowserRouter as Router,Routes, Route, Link} from "react-router-dom";
 
 
 
 function App() {
   return (
- 
-      <Landing/>
-      
+    <>
+      <Routes>
+        <Route path="/" element={<Landing/>}/>
+        <Route path="/Login" element={<Login/>}/>
+        <Route path="/Child" element={<ChildScreen/>}/>
+        <Route path="/Parent" element={<ParentScreen/>}/>
+        <Route path="/Admin" element={<AdminScreen/>}/>
+     </Routes>
+    </>
   );
 }
 

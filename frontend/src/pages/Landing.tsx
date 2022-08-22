@@ -7,8 +7,9 @@ import type { SizeType } from "antd/es/config-provider/SizeContext";
 import React, { useState } from "react";
 import Fox from "../images/MetamaskFox.svg";
 import Pig from "../images/pig.png";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router,Routes, Route, Link } from "react-router-dom";
 import Login from './Login';
+import {useNavigate,} from "react-router-dom";
 
 
 
@@ -16,6 +17,8 @@ function Landing() {
 
   const[walletAddress, setWalletAddress] = useState("");
 
+  let navigate = useNavigate();
+  
   async function requestAccount() {
     console.log("Request account...");
 
@@ -27,7 +30,8 @@ function Landing() {
         const accounts = await (window as any).ethereum.request({
           method: "eth_requestAccounts",
         });
-        setWalletAddress(accounts);
+
+        navigate("/Login");
         
       } catch (error) {
         console.log("Error connecting.");
@@ -155,8 +159,11 @@ function Landing() {
               The reliable, modern, and innovative way to leave a legacy, start
               now!
             </h2>
+            
           </Row>
           <Row style = {buttonBox}>
+
+
             
             <Button style = {buttonStyle} onClick={requestAccount}>  <span style = {buttonText}>Connect with Metamask <img style = {foxStyle} src={Fox} alt="metamask fox" /> </span> </Button>
           </Row>
