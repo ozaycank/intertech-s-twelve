@@ -3,16 +3,13 @@
 
 .container{
     display: inline-flex;
-    flex-wrap: wrap;
-    margin: 0 1em 4em 0 ;
-    justify-content: space-between;
+    flex-wrap: wrap;    
 }
 
 /* yazıların hepsi */
 .your-account{
     direction: rtl;
-    margin: 1em 1em 0 -3em;
-    
+    margin: 1em 1em 0 -5em;   
 }
 
 /*sadece your acc yazısı*/

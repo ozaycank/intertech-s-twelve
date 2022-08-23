@@ -36,7 +36,8 @@ const config = {
   data: pieChartData,
   angleField: "value",
   colorField: "type",
-  radius: 0.8,
+  color: ["rgb(223, 212, 244)","rgb(254, 197, 122)","rgb(255, 183, 160)"] ,
+  radius: 1,
   innerRadius: 0.6,
   label: {
     type: "inner",
@@ -65,7 +66,7 @@ const config = {
 
 function PieChart() {
   return (
-    <Wrapper style = {{width: "30em"}}>
+    <Wrapper style = {{width: "30em", margin: "0 0 0 3em"}}>
       <Pie {...config} />
     </Wrapper>
   );

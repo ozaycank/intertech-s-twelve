@@ -1,48 +1,37 @@
 import CSS from "csstype";
 import Logo from "../components/Logo";
-import { Col, Row, Button, Divider } from "antd";
+import { Col, Row, Button, Modal, DatePicker, Form } from "antd";
 import "antd/dist/antd.css";
-import type { SizeType } from "antd/es/config-provider/SizeContext";
 import React, { useState } from "react";
 import ChildImg from "../images/BGChild.svg";
 import ParentImg from "../images/BG.svg";
-import CButton from "../images/ChooseChild.svg";
-import PButton from "../images/ChooseParent.svg";
-import {useNavigate,} from "react-router-dom";
-import { BrowserRouter as Router,Routes, Route, Link } from "react-router-dom";
-import Parent from './ParentScreen';
-import Child from './ChildScreen';
-
+import { useNavigate } from "react-router-dom";
 
 function Login() {
-
   let navigate = useNavigate();
 
+  const [visible, setVisible] = useState(false);
+
+  const registerUser = (values : any) => {
+    console.log(values);
+    navigate("/Child");
+  }
+
   const parentButtonClick = () => {
-    console.log('Click');
+    console.log("Click");
     navigate("/Parent");
-  } 
+  };
 
   const childButtonClick = () => {
-    console.log('Click');
-    navigate("/Child");
-  } 
-
-  const bg: CSS.Properties = {
-    backgroundColor: "#F8F4DB",
-    position: "relative",
-    top: "0",
-    right: "0",
-    bottom: "0",
-    left: "0",
-
+    console.log("Click");
+    setVisible(true);
   };
 
   const upperText: CSS.Properties = {
     color: "#4E1DAC",
     textAlign: "center",
     fontSize: "2.6rem",
-    lineHeight: "2.13rem"
+    lineHeight: "2.13rem",
   };
 
   const middleText: CSS.Properties = {
@@ -50,12 +39,6 @@ function Login() {
     fontSize: "2rem",
     lineHeight: "2.13rem",
     letterSpacing: "-0.02em",
-
-  };
-
-  const lowerText: CSS.Properties = {
-    
-
   };
 
   const logoLoginStyle: CSS.Properties = {
@@ -67,160 +50,153 @@ function Login() {
     paddingLeft: "8em",
   };
 
- const FYI: CSS.Properties = {
+  const FYI: CSS.Properties = {
     fontFamily: "Ubuntu, sans-serif",
-    marginTop: '-1px',
-    paddingBottom: '20px',
+    marginTop: "-1px",
+    paddingBottom: "20px",
     marginLeft: "2em",
- };
+  };
 
   const ChildStyle: CSS.Properties = {
     fontFamily: "Ubuntu, sans-serif",
-    marginBottom: '10px',
-
+    marginBottom: "10px",
   };
 
   const ParentStyle: CSS.Properties = {
     fontFamily: "Ubuntu, sans-serif",
-    marginBottom: '10px',
-  };
-
-  const CButtonStyle: CSS.Properties = {
-    fontFamily: "Ubuntu, sans-serif",
+    marginBottom: "10px",
   };
 
   const buttonStyle1: CSS.Properties = {
     position: "absolute",
-    
+
     padding: "2.5rem",
-    background: "linear-gradient(90deg, rgba(219, 211, 239, 0.8) 0%, rgba(219, 211, 239, 0) 107.64%)",
+    background:
+      "linear-gradient(90deg, rgba(219, 211, 239, 0.8) 0%, rgba(219, 211, 239, 0) 107.64%)",
     backdropFilter: "blur(20px)",
     borderRadius: "2.5rem",
     width: "15rem",
-    transform: "translate(30%, 515%)",
+    transform: "translate(30%, 485%)",
+    fontSize: "2.25rem",
+    borderWidth: "0.1em",
+    lineHeight: "0.1rem",
+    textShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+    color: "#000000",
+    textAlign: "center",
+    verticalAlign: "center",
   };
 
   const buttonStyle2: CSS.Properties = {
     position: "absolute",
     padding: "2.5rem",
-    background: "linear-gradient(105.69deg, #FFB8A1 1.97%, rgba(255, 255, 255, 0) 104.4%)",
+    background:
+      "linear-gradient(105.69deg, #FFB8A1 1.97%, rgba(255, 255, 255, 0) 104.4%)",
     backdropFilter: "blur(20px)",
     borderRadius: "2.5rem",
     width: "15rem",
-    transform: "translate(30%, 515%)",
+    transform: "translate(30%, 485%)",
+    fontSize: "2.25rem",
+    borderWidth: "0.1em",
+    lineHeight: "0.1rem",
+    textShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+    color: "#000000",
+    textAlign: "center",
+    verticalAlign: "center",
   };
-
-  const buttonBox: CSS.Properties = {
-    width: "13.625rem",
-    height: "3.5rem",
-    left: "24.063rem",
-    top: "52.438rem",
-  };
-
-  const buttonText: CSS.Properties = {
-      position: "absolute",
-      fontFamily: "Ubuntu, sans-serif",
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, 380%)",
-      
-      fontSize: "2.25rem",
-      lineHeight: "2.563rem",
-      textShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-      color: "#000000",
-
-      
-  };
-
   //Tuşlar ve svg için container
   const Container: CSS.Properties = {
     position: "relative",
-
-  };
-
-  //onMouseOver={changeBackground} 
-  function changeBackground(e: React.ChangeEvent<any>) {
-    e.target.style.background = 'grey';
-    e.target.style.borderRadius = "80px";
-  };
-  
-
-  function mouseOn2(e: React.ChangeEvent<any>) {
-    e.target.style.background = '#FFB8A1';
-    e.target.style.borderRadius = "80px";
-    
-  };
-
-  function mouseOff2(e: React.ChangeEvent<any>) {
-    e.target.style.background = 'linear-gradient(105.69deg, #FFB8A1 1.97%, rgba(255, 255, 255, 0) 104.4%)';
-   
-   
-  };
-
-  function mouseOn1(e: React.ChangeEvent<any>) {
-    e.target.style.background = '#DBD3EF';
-    e.target.style.borderRadius = "80px";
-    
-  };
-
-  function mouseOff1(e: React.ChangeEvent<any>) {
-    e.target.style.background = 'linear-gradient(90deg, rgba(219, 211, 239, 0.8) 0%, rgba(219, 211, 239, 0) 107.64%)';
-    e.target.style.borderRadius = "80px";
   };
 
   return (
     <>
-      
-
       <Row>
-      <Col flex={1} style = {logoLoginStyle}><Logo /></Col>
-      <Col flex={4}></Col>
-      </Row>
-
-      <Row>
-      <Col flex={2}></Col>
-        <Col flex={1} style = {FYI}>
-            <Row justify="center">
-                <h1><span style={upperText}>Before You Start</span> </h1>
-              </Row>
-            <Row justify="center">
-                <h1 style = {middleText}>How are you planning to use Intertech's Twelve?</h1>
-              </Row>
-            <Row justify="center">
-                <h3 style = {lowerText}>You'll be guided by the role you choose.</h3>
-            </Row>
+        <Col flex={1} style={logoLoginStyle}>
+          <Logo />
         </Col>
-      <Col flex={2}></Col>
+        <Col flex={4}></Col>
       </Row>
 
       <Row>
-        
+        <Col flex={2}></Col>
+        <Col flex={1} style={FYI}>
+          <Row justify="center">
+            <h1>
+              <span style={upperText}>Before You Start</span>{" "}
+            </h1>
+          </Row>
+          <Row justify="center">
+            <h1 style={middleText}>
+              How are you planning to use Intertech's Twelve?
+            </h1>
+          </Row>
+          <Row justify="center">
+            <h3>You'll be guided by the role you choose.</h3>
+          </Row>
+        </Col>
+        <Col flex={2}></Col>
+      </Row>
+
+      <Row>
         <Col flex={2}>
           <Row justify="end">
-            <Row style = {Container}>
-              <img style = {ChildStyle}  src={ChildImg} alt="Child görseli"/> 
-              <Button onMouseEnter={mouseOn1} onMouseLeave={mouseOff1} style = {buttonStyle1} onClick={() => childButtonClick()}>  </Button>
-              <span style = {buttonText}>Choose</span>
+            <Row style={Container}>
+              <img style={ChildStyle} src={ChildImg} alt="Child görseli" />
+              <Button style={buttonStyle1} onClick={() => childButtonClick()}>
+                {" "}
+                Choose{" "}
+              </Button>
+              <Modal
+                title="We need to know your birthday. (*)"
+                centered
+                visible={visible}
+                onOk={() => setVisible(false)}
+                onCancel={() => setVisible(false)}
+                footer={null}
+                width={1040}
+                style={{ padding: '20em'}}
+              >
+                <Form layout="vertical" onFinish={registerUser} style={{ margin: '1em 4em 1em 8em'}}>
+                  <Form.Item style={{ margin: '1em 0 1em -3em', textAlign: 'center'}}
+                    name="birthdate"
+                    rules={[
+                      {
+                        required: true,
+                        message: "You need to enter your birthdate!",
+                      },
+                    ]}
+                  >
+                    <DatePicker />
+                  </Form.Item>
+                  <Form.Item>
+                    <Button
+                      style={{ margin: '1em 0 0 5.4em'}}
+                      type="primary"
+                      shape="round"
+                      size="middle"
+                      htmlType="submit"
+                    >
+                      Submit
+                    </Button>
+                  </Form.Item>
+                </Form>
+              </Modal>
             </Row>
           </Row>
         </Col>
         <Col flex={1}></Col>
         <Col flex={2}>
-
-        <Row justify="start">
-            <Row style = {Container}>
-              <img style = {ParentStyle} src={ParentImg} alt="Parent görseli"/> 
-              <Button  onMouseEnter={mouseOn2} onMouseLeave={mouseOff2} style = {buttonStyle2} onClick={() => parentButtonClick()}> </Button>
-              <span style = {buttonText}>Choose</span> 
+          <Row justify="start">
+            <Row style={Container}>
+              <img style={ParentStyle} src={ParentImg} alt="Parent görseli" />
+              <Button style={buttonStyle2} onClick={() => parentButtonClick()}>
+                {" "}
+                Choose{" "}
+              </Button>
             </Row>
           </Row>
-        
-          
-          
-          </Col>
-      
+        </Col>
       </Row>
-
     </>
   );
 }

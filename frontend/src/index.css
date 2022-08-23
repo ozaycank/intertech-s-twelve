@@ -16,12 +16,10 @@ code {
 
 .table-striped-rows tr:nth-child(2n-1) td {
   background-color: #ede7ff;
-
   font-family: Ubuntu;
   font-weight: 500;
- 
-  
 }
+
 
 /* arka planı rengi F8F4DB */
 .table-striped-rows tr:nth-child(2n) td {

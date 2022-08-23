@@ -1,6 +1,6 @@
 import CSS from "csstype";
 import Logo from "../components/Logo";
-import { Col, Row, Button, Divider,Statistic, Avatar } from "antd";
+import { Col, Row, Button, Divider,Statistic, Avatar, Modal  } from "antd";
 import "antd/dist/antd.css";
 import { UserOutlined } from '@ant-design/icons';
 import type { SizeType } from "antd/es/config-provider/SizeContext";
@@ -13,9 +13,9 @@ import Clock from "../images/ClockIcon.svg";
 import NavBar from "../components/NavBar";
 
 
+
 const { Countdown } = Statistic;
 const deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30; // Moment is also OK
-
 
 function ChildScreen() {
 
@@ -198,11 +198,11 @@ function ChildScreen() {
    const glassContainer: CSS.Properties = {
     position: "relative",
     height: "30em",
-    width: "40em", 
+    width: "42em", 
    
     margin:"4em 10em 0 4em",
   
-    
+    display: "center",
 
     backdropFilter: "blur(20px)",
     background:
