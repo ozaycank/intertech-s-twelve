@@ -121,8 +121,6 @@ function Landing() {
 
   return (
     <>
-     
-
       <Row justify = "center" >
         
         <Col> 

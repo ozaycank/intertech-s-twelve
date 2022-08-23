@@ -4,19 +4,28 @@ import { Col, Row, Button, Divider } from "antd";
 import "antd/dist/antd.css";
 import type { SizeType } from "antd/es/config-provider/SizeContext";
 import React, { useState } from "react";
-//import Child from "../images/Child.svg";
-//import Parent from "../images/Parent.svg";
-import Child from "../images/BGChild.svg";
-import Parent from "../images/BG.svg";
+import ChildImg from "../images/BGChild.svg";
+import ParentImg from "../images/BG.svg";
 import CButton from "../images/ChooseChild.svg";
 import PButton from "../images/ChooseParent.svg";
+import {useNavigate,} from "react-router-dom";
+import { BrowserRouter as Router,Routes, Route, Link } from "react-router-dom";
+import Parent from './ParentScreen';
+import Child from './ChildScreen';
 
 
 function Login() {
 
-  const buttonClick = () => {
-    console.log('Click');
+  let navigate = useNavigate();
 
+  const parentButtonClick = () => {
+    console.log('Click');
+    navigate("/Parent");
+  } 
+
+  const childButtonClick = () => {
+    console.log('Click');
+    navigate("/Child");
   } 
 
   const bg: CSS.Properties = {
@@ -189,8 +198,8 @@ function Login() {
         <Col flex={2}>
           <Row justify="end">
             <Row style = {Container}>
-              <img style = {ChildStyle}  src={Child} alt="Child görseli"/> 
-              <Button onMouseEnter={mouseOn1} onMouseLeave={mouseOff1} style = {buttonStyle1} onClick={() => buttonClick()}>  </Button>
+              <img style = {ChildStyle}  src={ChildImg} alt="Child görseli"/> 
+              <Button onMouseEnter={mouseOn1} onMouseLeave={mouseOff1} style = {buttonStyle1} onClick={() => childButtonClick()}>  </Button>
               <span style = {buttonText}>Choose</span>
             </Row>
           </Row>
@@ -200,8 +209,8 @@ function Login() {
 
         <Row justify="start">
             <Row style = {Container}>
-              <img style = {ParentStyle} src={Parent} alt="Child görseli"/> 
-              <Button  onMouseEnter={mouseOn2} onMouseLeave={mouseOff2} style = {buttonStyle2} onClick={() => buttonClick()}> </Button>
+              <img style = {ParentStyle} src={ParentImg} alt="Parent görseli"/> 
+              <Button  onMouseEnter={mouseOn2} onMouseLeave={mouseOff2} style = {buttonStyle2} onClick={() => parentButtonClick()}> </Button>
               <span style = {buttonText}>Choose</span> 
             </Row>
           </Row>

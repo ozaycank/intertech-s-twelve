@@ -8,33 +8,28 @@ interface NavbarProps {
   balance: string;
 }
 
-const NavBar:React.FC<NavbarProps> = ({ addr, balance }) =>  {
+const NavBar: React.FC<NavbarProps> = ({ addr, balance }) => {
   return (
-    <div className = "container">
-        <div className="your-account">
-          <div className="your-account1">
-            Your Account
-          </div>
-          <span className="MetamaskId">
-            {addr}
-          </span>
-          <div className="AccountBalance">
-            <span>
-              <span className="UbuntuMedium">Account Balance: </span>
-              <span className="UbuntuBold">{balance} ETH </span>
-            </span>
-          </div>
+    <div className="container">
+      <div className="your-account">
+        <div className="your-account1">Your Account</div>
+        <span className="MetamaskId">{addr}</span>
+        <div className="AccountBalance">
+          <span className="UbuntuMedium">Account Balance: </span>
+          <span className="UbuntuBold">{balance} ETH </span>
         </div>
         <div className="overlap-group2">
-          <div className="overlap-group">
+          <div>
             <Button className="LogOutButton">Log Out</Button>
           </div>
         </div>
+      </div>
+
       <div>
-      <Avatar className="userAvatar" size={64} icon={<UserOutlined />} />
+        <Avatar className="userAvatar" size={86} icon={<UserOutlined />} />
       </div>
     </div>
   );
-}
+};
 
 export default NavBar;

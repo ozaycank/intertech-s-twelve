@@ -1,46 +1,33 @@
-@import url("https://fonts.googleapis.com/css?famly=Ubuntu:400,700,500|Inter:400,500");
+@import url("https://fonts.googleapis.com/css?family=Ubuntu:400,700,500|Inter:400,500");
+
+
+.container{
+    display: inline-flex;
+    flex-wrap: wrap;
+    margin: 0 1em 4em 0 ;
+    justify-content: space-between;
+}
 
 /* yazıların hepsi */
 .your-account{
-    top: 1.25em;
-    width: 0em;
-    left: 50%;
-    min-height: 3em;
-    align-items: flex-end;
-    display: flex;
-    flex-direction: column; 
-    position: absolute;
-    margin-left: 1em;
+    direction: rtl;
+    margin: 1em 1em 0 -3em;
     
 }
 
 /*sadece your acc yazısı*/
 .your-account1{
-    height: 1,3em;
-    margin-right: 0.8em;
-    min-width: 14em;
-    text-align: center;
-    display : flex;
-    flex-direction: column;
-    align-items: center;
-    top: 1,3em;
     font-family: Ubuntu;
     font-size: 18px;
     font-weight: 700;
     line-height: 1,25em;
     letter-spacing: -0.01em;
-    
 
 }
 
 /*address*/
 .MetamaskId{
-    align-items: flex-end;
-    align-self: flex-end;
-    height: 1,3em;
-    border-radius: nullpx;
-    text-align: flex-end;
-    margin-right: 4.6em;
+
     font-family: Ubuntu;
     font-size: 18px;
     font-weight: 500;
@@ -51,11 +38,8 @@
 
 /*3. satır acc balance yazısı*/
 .AccountBalance{
-    height: 21px;
+    direction: rtl;
     letter-spacing: -0.18px;
-    margin-right: 80px;
-    min-width: 218px;
-    text-align: center;
 }
 
 .UbuntuMedium{
@@ -79,38 +63,20 @@
 .overlap-group2{
     top: 0;
     height: 124px;
-    position: relative;
     width: 20em;
 }
 
-.overlap-group{
-    -webkit-backdrop-filter: blur(20px) brightness(100%);
-    backdrop-filter: blur(20px) brightness(100%);
-    background: linear-gradient(180deg, rgb(225,225,225) 0%, rgba(225,225,225,0) 100%);
-    border-radius: 40px;
-    height: 43px;
-    left: -130%;
-    position: relative;
-    top: 80%;
-    width: 132px;
-    left: 20%;
-}
-
 .LogOutButton{
-    height: 39px;
-    left: 2px;
     mix-blend-mode: overlay;
-    position: relative;
     top: 2px;
     width: 128px;
-    align-self: flex-end;
     letter-spacing: -0.18px;
     text-align: center;
     font-size: large;
     font-family: sans-serif;
-    margin-right: 200px;
     height: 40px;
     border-radius: 40px;
+    direction: rtl;
 }
 
 .userAvatar{
@@ -128,4 +94,6 @@
     flex-direction: column;
     padding: 0px 20px;
     position: absolute;
+    margin-left: 4em;
+
 }
