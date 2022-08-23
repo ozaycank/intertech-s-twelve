@@ -2,44 +2,69 @@ import CSS from "csstype";
 import Logo from "../components/Logo";
 import { Col, Row } from "antd";
 import "antd/dist/antd.css";
-import { Button, Divider } from "antd";
-import type { SizeType } from "antd/es/config-provider/SizeContext";
-import React, { useState } from "react";
+import { Button, notification } from "antd";
+import { useState } from "react";
 import Fox from "../images/MetamaskFox.svg";
 import Pig from "../images/pig.png";
-import { BrowserRouter as Router,Routes, Route, Link } from "react-router-dom";
-import Login from './Login';
-import {useNavigate,} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { CONTRACT_ADDRESS, CONTRACT_ABI } from '../Contract';
+import { ethers } from 'ethers';
 
 
 
 function Landing() {
-
-  const[walletAddress, setWalletAddress] = useState("");
-
+  const [connecting, setConnecting] = useState(false);
   let navigate = useNavigate();
-  
-  async function requestAccount() {
-    console.log("Request account...");
 
-    //is Metamask Exist
-    if ((window as any).ethereum) {
-      console.log("detected");
+  const openInstallMetaMaskNotification = () => {
+    const key = `open${Date.now()}`; // a unique id for the notification
+    const btn = (
+      <Button
+        type="primary"
+        size="small"
+        onClick={() => {
+          notification.close(`${Date.now()}`);
+          window.open('https://metamask.io');
+        }}
+      >
+        Install Metamask
+      </Button>
+    );
+    notification.open({
+      message: 'MetaMask Is Not Installed',
+      description: 'You need to have MetaMask installed to use this application.',
+      btn,
+      key
+    });
+  }
 
-      try {
-        const accounts = await (window as any).ethereum.request({
-          method: "eth_requestAccounts",
-        });
+  const initMetaMask = async () => {
+    setConnecting(true);
+    //@ts-ignore
+    if (!window.ethereum) {
+      openInstallMetaMaskNotification();
+      return;
+    }
 
-        navigate("/Login");
-        
-      } catch (error) {
-        console.log("Error connecting.");
+    //@ts-ignore
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send('eth_requestAccounts', []);
+
+    const signer = provider.getSigner();
+    const ledger = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+
+    setConnecting(false);
+    
+    if (await ledger.isRegistered()) {
+      if (await ledger.isAdult()) {
+        navigate("/Parent");
+      } else {
+        navigate("/Child");
       }
     } else {
-      console.log("Metamask not detected");
+      navigate("/Login");
     }
-  };
+  }
 
   const logoLandingStyle: CSS.Properties = {
     fontFamily: "Inter, sans-serif",
@@ -74,7 +99,7 @@ function Landing() {
     fontWeight: "bold",
     fontFamily: "Inter, sans-serif",
     letterSpacing: "-0.01em",
-    
+
   };
 
   const lowerTextBox: CSS.Properties = {
@@ -99,13 +124,13 @@ function Landing() {
   };
 
   const buttonText: CSS.Properties = {
-      position: "absolute",
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%)",
-      fontSize: "3rem",
-      lineHeight: "3.625rem",
-      textShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    fontSize: "3rem",
+    lineHeight: "3.625rem",
+    textShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
   };
 
   const pigStyle: CSS.Properties = {
@@ -116,34 +141,36 @@ function Landing() {
   const foxStyle: CSS.Properties = {
     transform: 'scale(2.2)',
     marginLeft: "2rem",
-  
+
   };
 
   return (
     <>
-     
 
-      <Row justify = "center" >
-        
-        <Col> 
-          <Row style = {logoLandingStyle}>
+
+      <Row justify="center" >
+
+        <Col>
+          <Row style={logoLandingStyle}>
             <Logo />
           </Row>
-          <Row style = {upperTextBox}>
-            <h1 style = {upperText} >
+          <Row style={upperTextBox}>
+            <h1 style={upperText} >
               Safely transfer your savings to your loved ones with,
               <span style={innerText}> Intertech's Twelve.</span>
             </h1>
           </Row>
-          <Row style = {lowerTextBox}>
-            <h2 style = {lowerText} >
+          <Row style={lowerTextBox}>
+            <h2 style={lowerText} >
               The reliable, modern, and innovative way to leave a legacy, start
               now!
             </h2>
-            
+
           </Row>
-          <Row style = {buttonBox}>
-            <Button style = {buttonStyle} onClick={requestAccount}>  <span style = {buttonText}>Connect with Metamask <img style = {foxStyle} src={Fox} alt="metamask fox" /> </span> </Button>
+          <Row style={buttonBox}>
+            <Button style={buttonStyle} onClick={initMetaMask} disabled={connecting}>
+              <span style={buttonText}>Connect with Metamask <img style={foxStyle} src={Fox} alt="metamask fox" /></span>
+            </Button>
           </Row>
         </Col>
 
