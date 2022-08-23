@@ -120,7 +120,7 @@ function AdminScreen() {
     fontFamily: "Inter, sans-serif",
     paddingLeft: "1em",
     marginBottom: "10em",
-    transform: 'scale(0.7)'
+    transform: 'scale(0.8)'
 
   };
 

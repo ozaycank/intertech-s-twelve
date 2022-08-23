@@ -120,7 +120,7 @@ function ChildScreen() {
     fontFamily: "Inter, sans-serif",
     paddingLeft: "1em",
     marginBottom: "10em",
-    transform: 'scale(0.7)'
+    transform: 'scale(0.8)'
 
   };
 
@@ -155,11 +155,13 @@ function ChildScreen() {
 
   const thirdLineStyle: CSS.Properties = {
     fontFamily: 'Ubuntu',
-    fontSize: "18px",
-    fontWeight: '500',
-    lineHeight: '21px',
+    fontSize: "1.2em",
+    fontWeight: 'bold',
+    lineHeight: '1em',
     letterSpacing: '-0.01em',
     color: "#000000",
+
+    
     
   };
 
@@ -202,7 +204,7 @@ function ChildScreen() {
    
     margin:"4em 10em 0 4em",
   
-    display: "center",
+    
 
     backdropFilter: "blur(20px)",
     background:
@@ -233,10 +235,13 @@ function ChildScreen() {
           <Row>
             <h2 style = {thirdLineStyle}>Time remaining before you can withdraw your balance.</h2>
           </Row>
-          <Row><img style = {clockStyle} src={Clock} alt="Clock img"/> <Countdown title="Day Level" value={deadline} format="D : H : m : s" /> </Row>
+          <Row>
+            <img style = {clockStyle} src={Clock} alt="Clock img"/> 
+            <Countdown style = {{margin: "1em 0 0 0",  fontFamily: "Ubuntu", fontSize: "1em", fontWeight: "bold",}} value={deadline} format="D : H : m : s" /> 
+          </Row>
         </Col>
 
-        <Col style = {glassContainer}><PieChart/></Col>
+        <Col style = {glassContainer} ><PieChart/></Col>
       
         
       </Row>

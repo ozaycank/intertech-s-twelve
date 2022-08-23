@@ -221,7 +221,7 @@ function ParentScreen() {
     fontFamily: "Inter, sans-serif",
     paddingLeft: "1em",
     marginBottom: "10em",
-    transform: "scale(0.7)",
+    transform: "scale(0.9)",
   };
 
   const navbarContainer: CSS.Properties = {

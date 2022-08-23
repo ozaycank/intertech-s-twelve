@@ -9,7 +9,7 @@
 /* yazıların hepsi */
 .your-account{
     direction: rtl;
-    margin: 1em 1em 0 -5em;   
+    margin: 1em 1em 0 -10em;   
 }
 
 /*sadece your acc yazısı*/
@@ -81,9 +81,9 @@
     backdrop-filter: blur(12px) brightness(100%);
     background-color: white;
     border-radius: 41px/41.22px;
-    left: 40%;
+    left: 24%;
     min-width: 2.3em;
-    top: 6%;
+    top: 8%;
     box-shadow: inset -2px 2px 12px #00000040, inset -2px 2px 12px #00000040, -2px 2px 12px #00000040;
     color: pink; 
     align-items: center;
