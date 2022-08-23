@@ -1,29 +1,94 @@
 import CSS from "csstype";
 import Logo from "../components/Logo";
-import { Col, Row, Button, Modal, DatePicker, Form } from "antd";
+import { Col, Row, Button, Modal, DatePicker, Form, notification } from "antd";
 import "antd/dist/antd.css";
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import ChildImg from "../images/BGChild.svg";
 import ParentImg from "../images/BG.svg";
 import { useNavigate } from "react-router-dom";
+import { ethers } from "ethers";
+
+import { CONTRACT_ADDRESS, CONTRACT_ABI } from '../Contract';
 
 function Login() {
   let navigate = useNavigate();
 
   const [visible, setVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+  let ledger: ethers.Contract;
 
-  const registerUser = (values : any) => {
-    console.log(values);
-    navigate("/Child");
+  const initMetaMask = async () => {
+    if ((window as any).ethereum == null) {
+      navigate("/");
+    }
+
+    const provider = new ethers.providers.Web3Provider((window as any).ethereum);
+    await provider.send('eth_requestAccounts', []);
+
+    const signer = provider.getSigner();
+    ledger = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+
+    // Re-route user if necessary
+    if (await ledger.isRegistered()) {
+      if ((await ledger.isAdult())) {
+        navigate("/Parent");
+        return;
+      } else {
+        navigate("/Child");
+        return;
+      }
+    }
   }
 
-  const parentButtonClick = () => {
-    console.log("Click");
-    navigate("/Parent");
+  useEffect(() => {
+    initMetaMask();
+
+    (window as any).ethereum?.removeAllListeners();
+    (window as any).ethereum?.on('accountsChanged', () => {
+      initMetaMask();
+    });
+  }, []);
+
+  const registerUser = async (birthdate: any) => {
+    if (ledger == null) {
+      await initMetaMask();
+    }
+
+    const tx = await ledger.createAccount(birthdate);
+    await tx.wait();
+  }
+
+  const createChildAccount = async (values: any) => {
+    setLoading(true);
+    try {
+      await registerUser(values.birthdate.add(18, 'y').unix());
+      navigate("/Child");
+    } catch (e: any) {
+      notification.open({
+        message: "Transaction Failed.",
+        description: e.message,
+      });
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const createParentAccount = async () => {
+    setLoading(true);
+    try {
+      await registerUser(0);
+      navigate("/Parent");
+    } catch (e: any) {
+      notification.open({
+        message: "Transaction Failed.",
+        description: e.message,
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const childButtonClick = () => {
-    console.log("Click");
     setVisible(true);
   };
 
@@ -142,9 +207,8 @@ function Login() {
           <Row justify="end">
             <Row style={Container}>
               <img style={ChildStyle} src={ChildImg} alt="Child görseli" />
-              <Button style={buttonStyle1} onClick={() => childButtonClick()}>
-                {" "}
-                Choose{" "}
+              <Button style={buttonStyle1} onClick={childButtonClick} disabled={loading}>
+                Choose
               </Button>
               <Modal
                 title="We need to know your birthday. (*)"
@@ -154,10 +218,10 @@ function Login() {
                 onCancel={() => setVisible(false)}
                 footer={null}
                 width={1040}
-                style={{ padding: '20em'}}
+                style={{ padding: '20em' }}
               >
-                <Form layout="vertical" onFinish={registerUser} style={{ margin: '1em 4em 1em 8em'}}>
-                  <Form.Item style={{ margin: '1em 0 1em -3em', textAlign: 'center'}}
+                <Form layout="vertical" onFinish={createChildAccount} style={{ margin: '1em 4em 1em 8em' }}>
+                  <Form.Item style={{ margin: '1em 0 1em -3em', textAlign: 'center' }}
                     name="birthdate"
                     rules={[
                       {
@@ -170,11 +234,12 @@ function Login() {
                   </Form.Item>
                   <Form.Item>
                     <Button
-                      style={{ margin: '1em 0 0 5.4em'}}
+                      style={{ margin: '1em 0 0 5.4em' }}
                       type="primary"
                       shape="round"
                       size="middle"
                       htmlType="submit"
+                      loading={loading}
                     >
                       Submit
                     </Button>
@@ -189,9 +254,8 @@ function Login() {
           <Row justify="start">
             <Row style={Container}>
               <img style={ParentStyle} src={ParentImg} alt="Parent görseli" />
-              <Button style={buttonStyle2} onClick={() => parentButtonClick()}>
-                {" "}
-                Choose{" "}
+              <Button style={buttonStyle2} onClick={createParentAccount} disabled={loading}>
+                Choose
               </Button>
             </Row>
           </Row>
