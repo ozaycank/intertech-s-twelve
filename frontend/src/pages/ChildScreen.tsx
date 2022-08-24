@@ -1,119 +1,109 @@
 import CSS from "csstype";
+import { useEffect, useState } from "react";
 import Logo from "../components/Logo";
-import { Col, Row, Button, Divider,Statistic, Avatar, Modal  } from "antd";
+import { Col, Row, Statistic } from "antd";
 import "antd/dist/antd.css";
-import { UserOutlined } from '@ant-design/icons';
-import type { SizeType } from "antd/es/config-provider/SizeContext";
-import React, { useState } from "react";
-
-import type { countdownValueType } from 'antd/es/statistic/utils';
 import PieChart from "../components/PieChart";
 import HistoryTable from "../components/HistoryTable";
 import Clock from "../images/ClockIcon.svg";
 import NavBar from "../components/NavBar";
-
-
+import { useNavigate } from "react-router-dom";
+import { ethers } from "ethers";
+import { CONTRACT_ADDRESS, CONTRACT_ABI } from '../Contract';
 
 const { Countdown } = Statistic;
-const deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30; // Moment is also OK
 
 function ChildScreen() {
+  const [time, setTime] = useState(0);
+  const [walletAddr, setWalletAddr] = useState("");
+  const [balance, setBalance] = useState("0");
+  const [provider, setProvider] = useState<ethers.providers.Web3Provider>();
+  const [transactions, setTransactions] = useState(Array<any>);
 
-  //table
-  interface DataType {
-    key: string;
-    sender: string;
-    receiver: string;
-    date: string;
-    amount: string;
+  let navigate = useNavigate();
+  let ledger: ethers.Contract;
+
+  const initMetaMask = async () => {
+    if ((window as any).ethereum == null) {
+      navigate("/");
+    }
+
+    const provider = new ethers.providers.Web3Provider((window as any).ethereum);
+    await provider.send('eth_requestAccounts', []);
+
+    const signer = provider.getSigner();
+    signer.getAddress().then((addr: string) => setWalletAddr(addr));
+    ledger = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+
+    // Re-route user if necessary
+    if (await ledger.isRegistered()) {
+      if ((await ledger.isAdult())) {
+        navigate("/Parent");
+        return;
+      }
+    } else {
+      navigate("/");
+      return;
+    }
+
+    setProvider(provider);
+
+    ledger.getAdultTime().then((t: number) => setTime(t * 1000));
+    ledger.getBalance().then((b: string) => setBalance(b));
   }
 
-  const data: DataType[] = [
-    {
-      key: '1',
-      sender: '0xb794f5ea0ba39494ce839613fffba74279579268',
-      receiver: '0xc463f5ea0ba39494ce83964689fba74279579268',
-      date: '12.08.2022 - 14:36:23',
-      amount: '0.2 ETH',
-    },
-    {
-      key: '2',
-      sender: '0xb794f5ea0ba39494ce839613fffba74279579268',
-      receiver: '0xc463f5ea0ba39494ce83964689fba74279579268',
-      date: '12.08.2022 - 14:36:23',
-      amount: '0.3 ETH',
-    },
-    {
-      key: '3',
-      sender: '0xb794f5ea0ba39494ce839613fffba74279579268',
-      receiver: '0xc463f5ea0ba39494ce83964689fba74279579268',
-      date: '12.08.2022 - 14:36:23',
-      amount: '0.1 ETH',
-    },
-    {
-      key: '4',
-      sender: '0xb794f5ea0ba39494ce839613fffba74279579268',
-      receiver: '0xc463f5ea0ba39494ce83964689fba74279579268',
-      date: '12.08.2022 - 14:36:23',
-      amount: '1 ETH',
-    },
-    {
-      key: '5',
-      sender: '0xb794f5ea0ba39494ce839613fffba74279579268',
-      receiver: '0xc463f5ea0ba39494ce83964689fba74279579268',
-      date: '12.08.2022 - 14:36:23',
-      amount: '4 ETH',
-    },
-    {
-      key: '6',
-      sender: '0xb794f5ea0ba39494ce839613fffba74279579268',
-      receiver: '0xc463f5ea0ba39494ce83964689fba74279579268',
-      date: '12.08.2022 - 14:36:23',
-      amount: '0.5 ETH',
-    },
-    {
-      key: '7',
-      sender: '0xb794f5ea0ba39494ce839613fffba74279579268',
-      receiver: '0xc463f5ea0ba39494ce83964689fba74279579268',
-      date: '12.08.2022 - 14:36:23',
-      amount: '1.3 ETH',
-    },
-    {
-      key: '8',
-      sender: '0xb794f5ea0ba39494ce839613fffba74279579268',
-      receiver: '0xc463f5ea0ba39494ce83964689fba74279579268',
-      date: '12.08.2022 - 14:36:23',
-      amount: '2.1 ETH',
-    },
-    {
-      key: '9',
-      sender: '0xb794f5ea0ba39494ce839613fffba74279579268',
-      receiver: '0xc463f5ea0ba39494ce83964689fba74279579268',
-      date: '12.08.2022 - 14:36:23',
-      amount: '1.1 ETH',
-    },
-    {
-      key: '10',
-      sender: '0xb794f5ea0ba39494ce839613fffba74279579268',
-      receiver: '0xc463f5ea0ba39494ce83964689fba74279579268',
-      date: '12.08.2022 - 14:36:23',
-      amount: '10 ETH',
-    },
-    {
-      key: '11',
-      sender: '0xb794f5ea0ba39494ce839613fffba74279579268',
-      receiver: '0xc463f5ea0ba39494ce83964689fba74279579268',
-      date: '12.08.2022 - 14:36:23',
-      amount: '0.26 ETH',
-    },
-    {
-      key: '12',
-      sender: '0xb794f5ea0ba39494ce839613fffba74279579268',
-      receiver: '0xc463f5ea0ba39494ce83964689fba74279579268',
-      date: '12.08.2022 - 14:36:23',
-      amount: '0.89 ETH',
-    },
-  ];
+  useEffect(() => {
+    initMetaMask();
+
+    (window as any).ethereum?.removeAllListeners();
+    (window as any).ethereum?.on('accountsChanged', () => {
+      initMetaMask();
+    });
+  }, []);
+
+  const fetchHistory = async () => {
+    let transferFilter = {
+      address: CONTRACT_ADDRESS,
+      fromBlock: 11246644,
+      topics: [
+        ethers.utils.id("Transfer(address,address,uint256)"),
+        null,
+        "0x000000000000000000000000" + walletAddr.substring(2)
+      ]
+    };
+    const events = await provider!.getLogs(transferFilter)
+    const interf = new ethers.utils.Interface(CONTRACT_ABI);
+    
+    let txns: Array<{
+      key: string;
+      sender: string;
+      receiver: string;
+      date: string;
+      amount: string;
+    }> = [];
+
+    for (const event of events) {
+      const date = (await provider!.getBlock(event.blockNumber)).timestamp;
+      const decoded = interf.decodeEventLog("Transfer", event.data, event.topics);
+      txns.push({
+        key: event.transactionHash,
+        sender: decoded.from,
+        receiver: `You (${decoded.to})`,
+        date: new Date(date * 1000).toLocaleString(),
+        amount: ethers.utils.formatEther(decoded["value"]) + " ETH",
+      });
+    }
+
+    txns.reverse();
+    setTransactions(txns);
+  }
+
+
+  useEffect(() => {
+    if (provider != null && walletAddr != "") {
+      fetchHistory();
+    }
+  }, [provider, walletAddr]);
 
   const logoThirdStyle: CSS.Properties = {
     position: "relative",
@@ -129,7 +119,7 @@ function ChildScreen() {
     height: "8.75em",
     background: "linear-gradient(270deg, #BEA8F5 0%, rgba(190, 168, 245, 0) 100%)",
     paddingBottom: "11em",
-  
+
   };
 
   const FirstLineStyle: CSS.Properties = {
@@ -160,15 +150,10 @@ function ChildScreen() {
     lineHeight: '1em',
     letterSpacing: '-0.01em',
     color: "#000000",
-
-    
-    
   };
 
   const textsContainer: CSS.Properties = {
-
     padding: "8em 8em 0 4em",
-
   };
 
   const histTextStyle: CSS.Properties = {
@@ -190,21 +175,18 @@ function ChildScreen() {
   };
 
   const tableStyle: CSS.Properties = {
-   margin: "4em 4em 0 4em",
+    margin: "4em 4em 0 4em",
   };
 
   const clockStyle: CSS.Properties = {
     marginRight: "2em",
-   };
- 
-   const glassContainer: CSS.Properties = {
+  };
+
+  const glassContainer: CSS.Properties = {
     position: "relative",
     height: "30em",
-    width: "42em", 
-   
-    margin:"4em 10em 0 4em",
-  
-    
+    width: "42em",
+    margin: "4em 10em 0 4em",
 
     backdropFilter: "blur(20px)",
     background:
@@ -216,49 +198,54 @@ function ChildScreen() {
 
   return (
     <>
-      <Row style = {navbarContainer}>
-          <Col flex={1} style = {logoThirdStyle}><Logo /></Col>
-          <Col flex={2}></Col>
-          <Col flex={1}><NavBar addr="0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266" balance="1.02" /></Col>
-        </Row>
+      <Row style={navbarContainer}>
+        <Col flex={1} style={logoThirdStyle}><Logo /></Col>
+        <Col flex={2}></Col>
+        <Col flex={1}><NavBar addr={walletAddr} balance={ethers.utils.formatEther(balance)} /></Col>
+      </Row>
 
 
-      <Row justify = "center">
-      
-        <Col style = {textsContainer}>
+      <Row justify="center">
+
+        <Col style={textsContainer}>
           <Row>
-            <h1 style = {FirstLineStyle}>Your Account Information</h1>
+            <h1 style={FirstLineStyle}>Your Account Information</h1>
           </Row>
           <Row>
-            <h2 style = {secondLineStyle}>Child Account</h2>
+            <h2 style={secondLineStyle}>Child Account</h2>
           </Row>
           <Row>
-            <h2 style = {thirdLineStyle}>Time remaining before you can withdraw your balance.</h2>
+            <h2 style={thirdLineStyle}>Time remaining before you can withdraw your balance.</h2>
           </Row>
           <Row>
-            <img style = {clockStyle} src={Clock} alt="Clock img"/> 
-            <Countdown style = {{margin: "1em 0 0 0",  fontFamily: "Ubuntu", fontSize: "1em", fontWeight: "bold",}} value={deadline} format="D : H : m : s" /> 
+            <img style={clockStyle} src={Clock} alt="Clock img" />
+            <Countdown style={{
+              margin: "1em 0 0 0",
+              fontFamily: "Ubuntu",
+              fontSize: "1em",
+              fontWeight: "bold",
+            }}
+              value={time}
+              format="Y : D : H : m : s"
+            />
           </Row>
         </Col>
 
-        <Col style = {glassContainer} ><PieChart/></Col>
-      
-        
+        <Col style={glassContainer} ><PieChart /></Col>
       </Row>
-     
-        <Row> 
-          <h1 style = {histTextStyle}>Transaction History</h1>
-        </Row> 
-        <Row>
-          <hr style={historyLineStyle} />
-        </Row>
-          
 
-        <Row justify = "center">
-          <Col flex={1}></Col>
-          <Col flex={2} style = {tableStyle}><HistoryTable data={data}/></Col>
-          <Col flex={1}></Col>
-        </Row>
+      <Row>
+        <h1 style={histTextStyle}>Transaction History</h1>
+      </Row>
+      <Row>
+        <hr style={historyLineStyle} />
+      </Row>
+
+      <Row justify="center">
+        <Col flex={1}></Col>
+        <Col flex={2} style={tableStyle}><HistoryTable data={transactions} /></Col>
+        <Col flex={1}></Col>
+      </Row>
     </>
   );
 }
