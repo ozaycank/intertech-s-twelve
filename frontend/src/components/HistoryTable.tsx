@@ -26,13 +26,13 @@ const HistoryTable: FC<HistoryTableProps> = ({ data }) => {
           title: 'SENDER',
           dataIndex: 'sender',
           key: 'sender',
-          render: text => <a href="https://etherscan.io/" target="blank">{text}</a>,
+          render: text => <a href={`https://etherscan.io/address/${text}`} target="blank">{text}</a>,
         },
         {
           title: 'RECEIVER',
           dataIndex: 'receiver',
           key: 'receiver',
-          render: text => <a href="https://etherscan.io/" target="blank">{text}</a>,
+          render: text => <a href={`https://etherscan.io/address/${text}`} target="blank">{text}</a>,
         },
         {
           title: 'DATE',

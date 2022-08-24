@@ -196,6 +196,24 @@ function ChildScreen() {
     borderRadius: "2.5rem",
   };
 
+  const ref = React.useRef();
+
+  React.useEffect(() => {
+    const oldFormatter = ref.current.formatCountdown;
+    ref.current.formatCountdown = (...params) => {
+      const result = oldFormatter(...params);
+      const [day, hour, minute, second] = result.split(':');
+      return (
+        <>
+          <div>DD: {day}</div>
+          <div>HH: {hour}</div>
+          <div>MM: {minute}</div>
+          <div>SS: {second}</div>
+        </>
+      );
+    };
+  }, []);
+
   return (
     <>
       <Row style={navbarContainer}>
