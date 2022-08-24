@@ -19,7 +19,10 @@ function ParentScreen() {
   const [walletAddr, setWalletAddr] = useState("");
   const [accountBalance, setAccountBalance] = useState("0");
   const [receivers, setReceivers] = useState(Array<{ addr: string, nickname: string }>);
+  const [transactions, setTransactions] = useState(Array<any>);
+
   const [ledger, setLedger] = useState<ethers.Contract>();
+  const [provider, setProvider] = useState<ethers.providers.Web3Provider>();
 
   let navigate = useNavigate();
 
@@ -39,10 +42,11 @@ function ParentScreen() {
     }
 
     ledger?.removeAllListeners();
-    
+
     const tmpLedger = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+    setProvider(provider);
     setLedger(tmpLedger);
-    
+
     // Re-route user if necessary
     if (await tmpLedger.isRegistered()) {
       if (!(await tmpLedger.isAdult())) {
@@ -53,10 +57,10 @@ function ParentScreen() {
       navigate("/Login");
       return;
     }
-    
+
     const tmpAddress = await signer.getAddress();
     setWalletAddr(tmpAddress);
-    
+
     tmpLedger.getBalance().then((balance: string) => { setAccountBalance(balance) }).catch(console.error);
 
     let balanceFilter = {
@@ -92,18 +96,95 @@ function ParentScreen() {
 
   useEffect(() => {
     initMetaMask().then((contract) => {
-      fetchReceivers(contract!).catch(console.error)
-    });
+      fetchReceivers(contract!)
+    }).catch(console.error);
 
     (window as any).ethereum?.removeAllListeners();
     (window as any).ethereum?.on('accountsChanged', () => {
-      console.log("Changed accounts")
       initMetaMask().then((contract) => {
         fetchReceivers(contract!).catch(console.error)
       });
-      console.log("Account Changed!")
     });
   }, []);
+
+  const fetchHistory = async () => {
+    const sendFilter = {
+      address: CONTRACT_ADDRESS,
+      fromBlock: 11246644,
+      topics: [
+        ethers.utils.id("Transfer(address,address,uint256)"),
+        "0x000000000000000000000000" + walletAddr.substring(2),
+      ]
+    };
+
+    const receiveFilter = {
+      address: CONTRACT_ADDRESS,
+      fromBlock: 11246644,
+      topics: [
+        ethers.utils.id("Transfer(address,address,uint256)"),
+        null,
+        "0x000000000000000000000000" + walletAddr.substring(2),
+      ]
+    };
+
+    const sendEvents = await provider!.getLogs(sendFilter);
+    const receiveEvents = await provider!.getLogs(receiveFilter);
+    const interf = new ethers.utils.Interface(CONTRACT_ABI);
+
+    let send: Array<{
+      key: string;
+      sender: string;
+      receiver: string;
+      date: string;
+      amount: string;
+    }> = [];
+
+    let receive: Array<{
+      key: string;
+      sender: string;
+      receiver: string;
+      date: string;
+      amount: string;
+    }> = [];
+
+    for (const event of sendEvents) {
+      const date = (await provider!.getBlock(event.blockNumber)).timestamp;
+      const decoded = interf.decodeEventLog("Transfer", event.data, event.topics);
+      send.push({
+        key: event.transactionHash,
+        sender: `You (${decoded.from})`,
+        receiver: decoded.to,
+        date: date.toString(),
+        amount: ethers.utils.formatEther(decoded["value"]) + " ETH",
+      });
+    }
+
+    for (const event of receiveEvents) {
+      const date = (await provider!.getBlock(event.blockNumber)).timestamp;
+      const decoded = interf.decodeEventLog("Transfer", event.data, event.topics);
+      send.push({
+        key: event.transactionHash,
+        sender: decoded.from,
+        receiver: `You (${decoded.to})`,
+        date: date.toString(),
+        amount: ethers.utils.formatEther(decoded["value"]) + " ETH",
+      });
+    }
+
+    const dateFormat = Intl.DateTimeFormat(undefined, { dateStyle: 'short', timeStyle: 'medium' });
+
+    // Warning: resource-heavy operations ahead, look away
+    const txns = send.concat(receive)
+    txns.sort((a, b) => parseInt(b.date) - parseInt(a.date));
+    txns.forEach((txn) => { txn.date = dateFormat.format(new Date(parseInt(txn.date) * 1000)) });
+    setTransactions(txns);
+  };
+
+  useEffect(() => {
+    if (provider != null && walletAddr !== "") {
+      fetchHistory();
+    }
+  }, [walletAddr]);
 
   const receiverEventListener = (_: string, added: boolean, receiver: string, nickname: string, event: any) => {
     if (added) {
@@ -119,102 +200,6 @@ function ParentScreen() {
       });
     }
   }
-
-  //table
-  interface DataType {
-    key: string;
-    sender: string;
-    receiver: string;
-    date: string;
-    amount: string;
-  }
-
-  const data: DataType[] = [
-    {
-      key: '1',
-      sender: '0xb794f5ea0ba39494ce839613fffba74279579268',
-      receiver: '0xc463f5ea0ba39494ce83964689fba74279579268',
-      date: '12.08.2022 - 14:36:23',
-      amount: '0.2 ETH',
-    },
-    {
-      key: '2',
-      sender: '0xb794f5ea0ba39494ce839613fffba74279579268',
-      receiver: '0xc463f5ea0ba39494ce83964689fba74279579268',
-      date: '12.08.2022 - 14:36:23',
-      amount: '0.3 ETH',
-    },
-    {
-      key: '3',
-      sender: '0xb794f5ea0ba39494ce839613fffba74279579268',
-      receiver: '0xc463f5ea0ba39494ce83964689fba74279579268',
-      date: '12.08.2022 - 14:36:23',
-      amount: '0.1 ETH',
-    },
-    {
-      key: '4',
-      sender: '0xb794f5ea0ba39494ce839613fffba74279579268',
-      receiver: '0xc463f5ea0ba39494ce83964689fba74279579268',
-      date: '12.08.2022 - 14:36:23',
-      amount: '1 ETH',
-    },
-    {
-      key: '5',
-      sender: '0xb794f5ea0ba39494ce839613fffba74279579268',
-      receiver: '0xc463f5ea0ba39494ce83964689fba74279579268',
-      date: '12.08.2022 - 14:36:23',
-      amount: '4 ETH',
-    },
-    {
-      key: '6',
-      sender: '0xb794f5ea0ba39494ce839613fffba74279579268',
-      receiver: '0xc463f5ea0ba39494ce83964689fba74279579268',
-      date: '12.08.2022 - 14:36:23',
-      amount: '0.5 ETH',
-    },
-    {
-      key: '7',
-      sender: '0xb794f5ea0ba39494ce839613fffba74279579268',
-      receiver: '0xc463f5ea0ba39494ce83964689fba74279579268',
-      date: '12.08.2022 - 14:36:23',
-      amount: '1.3 ETH',
-    },
-    {
-      key: '8',
-      sender: '0xb794f5ea0ba39494ce839613fffba74279579268',
-      receiver: '0xc463f5ea0ba39494ce83964689fba74279579268',
-      date: '12.08.2022 - 14:36:23',
-      amount: '2.1 ETH',
-    },
-    {
-      key: '9',
-      sender: '0xb794f5ea0ba39494ce839613fffba74279579268',
-      receiver: '0xc463f5ea0ba39494ce83964689fba74279579268',
-      date: '12.08.2022 - 14:36:23',
-      amount: '1.1 ETH',
-    },
-    {
-      key: '10',
-      sender: '0xb794f5ea0ba39494ce839613fffba74279579268',
-      receiver: '0xc463f5ea0ba39494ce83964689fba74279579268',
-      date: '12.08.2022 - 14:36:23',
-      amount: '10 ETH',
-    },
-    {
-      key: '11',
-      sender: '0xb794f5ea0ba39494ce839613fffba74279579268',
-      receiver: '0xc463f5ea0ba39494ce83964689fba74279579268',
-      date: '12.08.2022 - 14:36:23',
-      amount: '0.26 ETH',
-    },
-    {
-      key: '12',
-      sender: '0xb794f5ea0ba39494ce839613fffba74279579268',
-      receiver: '0xc463f5ea0ba39494ce83964689fba74279579268',
-      date: '12.08.2022 - 14:36:23',
-      amount: '0.89 ETH',
-    },
-  ];
 
   const logoThirdStyle: CSS.Properties = {
     position: "relative",
@@ -414,7 +399,7 @@ function ParentScreen() {
 
       <Row>
         <Col flex={1}></Col>
-        <Col flex={3} style={tableStyle}><HistoryTable data={data} /></Col>
+        <Col flex={3} style={tableStyle}><HistoryTable data={transactions} /></Col>
         <Col flex={1}>  </Col>
       </Row>
     </>
