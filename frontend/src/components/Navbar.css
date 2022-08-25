@@ -1,0 +1,89 @@
+@import url("https://fonts.googleapis.com/css?family=Ubuntu:400,700,500|Inter:400,500");
+
+
+.container{
+    display: inline-flex;
+    flex-wrap: wrap;    
+}
+
+/* yazıların hepsi */
+.your-account{
+    direction: rtl;
+    margin: 1em 1em 0 -10em;   
+}
+
+/*sadece your acc yazısı*/
+.your-account1{
+    font-family: Ubuntu;
+    font-size: 1.125em;
+    font-weight: 700;
+    line-height: 1,25em;
+    letter-spacing: -0.01em;
+
+}
+
+/*address*/
+.MetamaskId{
+
+    font-family: Ubuntu;
+    font-size: 1.125em;
+    font-weight: 500;
+    line-height: 1.313em;
+    letter-spacing: -0.01em;
+
+}
+
+/*3. satır acc balance yazısı*/
+.AccountBalance{
+    direction: rtl;
+    letter-spacing: -0.011em;
+}
+
+.UbuntuMedium{
+    font-family: Ubuntu;
+    font-size: 1.125em;
+    font-weight: 700;
+    line-height: 1.313em;
+    letter-spacing: -0.01em;
+    text-align: center;
+}
+
+.UbuntuBold{
+    font-family: Ubuntu;
+    font-size: 1.125em;
+    font-weight: 500;
+    line-height: 1.313em;
+    letter-spacing: -0.01em;
+    text-align: center;
+}
+
+.LogOutButton{
+    top: 1.2em;
+    width: 8em;
+    letter-spacing: -0.011em;
+    text-align: center;
+    font-size: large;
+    font-family: sans-serif;
+    height: 2.5em;
+    font-weight: bold;
+    border-radius: 2.5em;
+    direction: rtl;
+
+    background: linear-gradient(105.69deg, #FFFFFF 1.97%, rgba(255, 255, 255, 0) 104.4%);
+    backdrop-filter: blur(1.25rem);
+}
+
+.userAvatar{
+    -webkit-backdrop-filter: blur(0.75em) brightness(100%);
+    backdrop-filter: blur(12px);
+    background-color: white;
+    left: 24%;
+    top: 20%;
+    box-shadow: -2px 2px 12px rgba(0, 0, 0, 0.25), inset -2px 2px 12px rgba(0, 0, 0, 0.25), inset -2px 2px 12px rgba(0, 0, 0, 0.25);
+    color: pink; 
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding: 0em 1.25em;
+
+}

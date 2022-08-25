@@ -1,25 +1,27 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Landing from './pages/Landing';
+import Login from './pages/Login';
+import AdminScreen from './pages/AdminScreen';
+import ChildScreen from './pages/ChildScreen';
+import ParentScreen from './pages/ParentScreen';
+
+import {BrowserRouter as Router,Routes, Route, Link} from "react-router-dom";
+
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Routes>
+        <Route path="/" element={<Landing/>}/>
+        <Route path="/Login" element={<Login/>}/>
+        <Route path="/Child" element={<ChildScreen/>}/>
+        <Route path="/Parent" element={<ParentScreen/>}/>
+        <Route path="/Admin" element={<AdminScreen/>}/>
+     </Routes>
+    </>
   );
 }
 
