@@ -1,4 +1,5 @@
 export const CONTRACT_ADDRESS = "0xe8e7a3AeB3e131E9A2B3aA3A3EC15D9ef321e4c9";
+export const CONTRACT_BLOCK = 11246644;
 
 export const CONTRACT_ABI = [
   {

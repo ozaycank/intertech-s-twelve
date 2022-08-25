@@ -11,7 +11,6 @@ import { CONTRACT_ADDRESS, CONTRACT_ABI } from '../Contract';
 import { ethers } from 'ethers';
 
 
-
 function Landing() {
   const [connecting, setConnecting] = useState(false);
   let navigate = useNavigate();
@@ -23,7 +22,7 @@ function Landing() {
         type="primary"
         size="small"
         onClick={() => {
-          notification.close(`${Date.now()}`);
+          notification.close(`open${Date.now()}`);
           window.open('https://metamask.io');
         }}
       >

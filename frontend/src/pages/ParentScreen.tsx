@@ -12,7 +12,7 @@ import DepositWithdrawForm from "../components/DepositWithdrawForm";
 import HistoryTable from "../components/HistoryTable";
 import NavBar from "../components/NavBar";
 import TransferForm from "../components/TransferForm";
-import { CONTRACT_ADDRESS, CONTRACT_ABI } from '../Contract';
+import { CONTRACT_ADDRESS, CONTRACT_ABI, CONTRACT_BLOCK } from '../Contract';
 
 
 function ParentScreen() {
@@ -110,7 +110,7 @@ function ParentScreen() {
   const fetchHistory = async () => {
     const sendFilter = {
       address: CONTRACT_ADDRESS,
-      fromBlock: 11246644,
+      fromBlock: CONTRACT_BLOCK,
       topics: [
         ethers.utils.id("Transfer(address,address,uint256)"),
         "0x000000000000000000000000" + walletAddr.substring(2),
@@ -119,7 +119,7 @@ function ParentScreen() {
 
     const receiveFilter = {
       address: CONTRACT_ADDRESS,
-      fromBlock: 11246644,
+      fromBlock: CONTRACT_BLOCK,
       topics: [
         ethers.utils.id("Transfer(address,address,uint256)"),
         null,

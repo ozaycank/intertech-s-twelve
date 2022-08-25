@@ -9,7 +9,7 @@ import Clock from "../images/ClockIcon.svg";
 import NavBar from "../components/NavBar";
 import { useNavigate } from "react-router-dom";
 import { ethers } from "ethers";
-import { CONTRACT_ADDRESS, CONTRACT_ABI } from '../Contract';
+import { CONTRACT_ADDRESS, CONTRACT_ABI, CONTRACT_BLOCK } from '../Contract';
 
 const { Countdown } = Statistic;
 
@@ -29,6 +29,7 @@ function ChildScreen() {
     }
 
     const provider = new ethers.providers.Web3Provider((window as any).ethereum);
+    setProvider(provider);
     await provider.send('eth_requestAccounts', []);
 
     const signer = provider.getSigner();
@@ -46,8 +47,6 @@ function ChildScreen() {
       return;
     }
 
-    setProvider(provider);
-
     ledger.getAdultTime().then((t: number) => setTime(t * 1000));
     ledger.getBalance().then((b: string) => setBalance(b));
   }
@@ -64,7 +63,7 @@ function ChildScreen() {
   const fetchHistory = async () => {
     let transferFilter = {
       address: CONTRACT_ADDRESS,
-      fromBlock: 11246644,
+      fromBlock: CONTRACT_BLOCK,
       topics: [
         ethers.utils.id("Transfer(address,address,uint256)"),
         null,
@@ -73,7 +72,7 @@ function ChildScreen() {
     };
     const events = await provider!.getLogs(transferFilter)
     const interf = new ethers.utils.Interface(CONTRACT_ABI);
-    
+
     let txns: Array<{
       key: string;
       sender: string;
@@ -103,7 +102,7 @@ function ChildScreen() {
     if (provider != null && walletAddr != "") {
       fetchHistory();
     }
-  }, [provider, walletAddr]);
+  }, [walletAddr]);
 
   const logoThirdStyle: CSS.Properties = {
     position: "relative",
