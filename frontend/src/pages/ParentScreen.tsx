@@ -399,6 +399,7 @@ function ParentScreen() {
                 onTransfer={async (addr, amount) => {
                   const tx = await ledger!.send(addr, amount);
                   await tx.wait();
+                  fetchHistory();
                 }}
               />
             </Col>

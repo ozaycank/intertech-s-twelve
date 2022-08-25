@@ -34,7 +34,6 @@ function ChildScreen() {
     await provider.send('eth_requestAccounts', []);
 
     const signer = provider.getSigner();
-    signer.getAddress().then((addr: string) => setWalletAddr(addr));
     ledger = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
 
     // Re-route user if necessary
@@ -50,6 +49,20 @@ function ChildScreen() {
 
     ledger.getAdultTime().then((t: number) => setTime(t * 1000));
     ledger.getBalance().then((b: string) => setBalance(b));
+
+    const addr = await signer.getAddress();
+    setWalletAddr(addr);
+
+    let balanceFilter = {
+      topics: [
+        ethers.utils.id("BalanceChange(address,uint256)"),
+        "0x000000000000000000000000" + addr.substring(2),
+      ],
+    };
+    ledger.on(balanceFilter, (_: string, value: ethers.BigNumber) => {
+      setBalance(value.toString());
+      fetchHistory();
+    });
   }
 
   useEffect(() => {

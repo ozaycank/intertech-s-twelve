@@ -38,21 +38,18 @@ function Landing() {
   }
 
   const initMetaMask = async () => {
-    setConnecting(true);
-    //@ts-ignore
-    if (!window.ethereum) {
+    if (!(window as any).ethereum) {
       openInstallMetaMaskNotification();
       return;
     }
 
-    //@ts-ignore
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    setConnecting(true);
+
+    const provider = new ethers.providers.Web3Provider((window as any).ethereum);
     await provider.send('eth_requestAccounts', []);
 
     const signer = provider.getSigner();
     const ledger = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
-
-    setConnecting(false);
     
     if (await ledger.isRegistered()) {
       if (await ledger.isAdult()) {
@@ -63,6 +60,8 @@ function Landing() {
     } else {
       navigate("/Login");
     }
+
+    setConnecting(false);
   }
 
   const logoLandingStyle: CSS.Properties = {

@@ -58,7 +58,7 @@ const HistoryTable: FC<HistoryTableProps> = ({ data }) => {
         }}
         columns={columns}
         dataSource={data}
-        pagination={{ pageSize: 25 }}
+        pagination={{ pageSize: 10 }}
       />
     </div>
   );
