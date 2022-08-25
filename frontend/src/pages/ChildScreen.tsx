@@ -222,7 +222,7 @@ function ChildScreen() {
               fontWeight: "bold",
             }}
               value={time}
-              format="Y : D : H : m : s"
+              format="Y year D day H hour"
             />
           </Row>
         </Col>
