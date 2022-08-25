@@ -106,9 +106,6 @@ function ParentScreen() {
   const fetchReceivers = async (contract: ethers.Contract) => {
     if (contract != null) {
       let receiverList = await contract.getReceivers();
-      receiverList.map((a: any) => {
-        return { addr: a["addr"], nickname: a["nickname"] };
-      });
       setReceivers(receiverList);
     }
   };
@@ -148,65 +145,43 @@ function ParentScreen() {
       ],
     };
 
-    const sendEvents = await provider!.getLogs(sendFilter);
-    const receiveEvents = await provider!.getLogs(receiveFilter);
+    const [sendEvents, receiveEvents] = await Promise.all([
+      provider!.getLogs(sendFilter), 
+      provider!.getLogs(receiveFilter)
+    ]);
+    
     const interf = new ethers.utils.Interface(CONTRACT_ABI);
 
-    let send: Array<{
-      key: string;
-      sender: string;
-      receiver: string;
-      date: string;
-      amount: string;
-    }> = [];
-
-    let receive: Array<{
-      key: string;
-      sender: string;
-      receiver: string;
-      date: string;
-      amount: string;
-    }> = [];
-
-    for (const event of sendEvents) {
+    const sendPromises = sendEvents.map(async (event) => {
       const date = (await provider!.getBlock(event.blockNumber)).timestamp;
-      const decoded = interf.decodeEventLog(
-        "Transfer",
-        event.data,
-        event.topics
-      );
-      send.push({
+      const decoded = interf.decodeEventLog("Transfer", event.data, event.topics);
+      return {
         key: event.transactionHash,
         sender: `You (${decoded.from})`,
         receiver: decoded.to,
         date: date.toString(),
         amount: ethers.utils.formatEther(decoded["value"]) + " ETH",
-      });
-    }
+      };
+    });
 
-    for (const event of receiveEvents) {
+    const receivePromises = receiveEvents.map(async (event) => {
       const date = (await provider!.getBlock(event.blockNumber)).timestamp;
-      const decoded = interf.decodeEventLog(
-        "Transfer",
-        event.data,
-        event.topics
-      );
-      send.push({
+      const decoded = interf.decodeEventLog("Transfer", event.data, event.topics);
+      return {
         key: event.transactionHash,
         sender: decoded.from,
         receiver: `You (${decoded.to})`,
         date: date.toString(),
         amount: ethers.utils.formatEther(decoded["value"]) + " ETH",
-      });
-    }
+      };
+    });
 
     const dateFormat = Intl.DateTimeFormat(undefined, {
       dateStyle: "short",
       timeStyle: "medium",
     });
 
-    // Warning: resource-heavy operations ahead, look away
-    const txns = send.concat(receive);
+    const txns = await Promise.all(sendPromises.concat(receivePromises));
     txns.sort((a, b) => parseInt(b.date) - parseInt(a.date));
     txns.forEach((txn) => {
       txn.date = dateFormat.format(new Date(parseInt(txn.date) * 1000));
@@ -355,7 +330,7 @@ function ParentScreen() {
   };
 
   //API
-  useEffect(() => { 
+  useEffect(() => {
     fetch("https://exchange-rates.abstractapi.com/v1/live/?api_key=9b626d5b57974e3ab328bc8325f56568&base=ETH&target=USD,EUR,TRY,GBP,BTC", {
     })
       .then((response) => response.json())
@@ -380,7 +355,7 @@ function ParentScreen() {
           
       );
   }, []);
-  
+
   return (
     <>
       <Row style={navbarContainer}>

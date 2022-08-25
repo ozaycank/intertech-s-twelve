@@ -71,29 +71,27 @@ function ChildScreen() {
         "0x000000000000000000000000" + walletAddr.substring(2)
       ]
     };
-    const events = await provider!.getLogs(transferFilter)
     const interf = new ethers.utils.Interface(CONTRACT_ABI);
 
-    let txns: Array<{
-      key: string;
-      sender: string;
-      receiver: string;
-      date: string;
-      amount: string;
-    }> = [];
-
-    for (const event of events) {
+    const dateFormat = Intl.DateTimeFormat(undefined, {
+      dateStyle: "short",
+      timeStyle: "medium",
+    });
+    
+    const events = await provider!.getLogs(transferFilter);
+    const promises = events.map(async (event) => {
       const date = (await provider!.getBlock(event.blockNumber)).timestamp;
       const decoded = interf.decodeEventLog("Transfer", event.data, event.topics);
-      txns.push({
+      return {
         key: event.transactionHash,
         sender: decoded.from,
         receiver: `You (${decoded.to})`,
-        date: new Date(date * 1000).toLocaleString(),
+        date: dateFormat.format(new Date(date * 1000)),
         amount: ethers.utils.formatEther(decoded["value"]) + " ETH",
-      });
-    }
+      };
+    });
 
+    const txns = await Promise.all(promises);
     txns.reverse();
     setTransactions(txns);
   }
@@ -105,7 +103,7 @@ function ChildScreen() {
   }, [walletAddr]);
 
   useEffect(() => {
-    if (transactions.length > 0) {
+    if (transactions.length > 0 && balance !== "0") {
       let senders = new Map<string, ethers.BigNumber>();
 
       for (const txn of transactions) {
