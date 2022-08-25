@@ -12,14 +12,22 @@ import DepositWithdrawForm from "../components/DepositWithdrawForm";
 import HistoryTable from "../components/HistoryTable";
 import NavBar from "../components/NavBar";
 import TransferForm from "../components/TransferForm";
-import { CONTRACT_ADDRESS, CONTRACT_ABI, CONTRACT_BLOCK } from '../Contract';
-
+import { CONTRACT_ADDRESS, CONTRACT_ABI, CONTRACT_BLOCK } from "../Contract";
 
 function ParentScreen() {
   const [walletAddr, setWalletAddr] = useState("");
   const [accountBalance, setAccountBalance] = useState("0");
-  const [receivers, setReceivers] = useState(Array<{ addr: string, nickname: string }>);
+  const [receivers, setReceivers] = useState(
+    Array<{ addr: string; nickname: string }>
+  );
   const [transactions, setTransactions] = useState(Array<any>);
+
+  const [ethToUSD, setEthToUSD] = useState("");
+  const [ethToEUR, setEthToEUR] = useState("");
+  const [ethToTRY, setEthToTRY] = useState("");
+  const [ethToGBP, setEthToGBP] = useState("");
+  const [ethToBTC, setEthToBTC] = useState("");
+
 
   const [ledger, setLedger] = useState<ethers.Contract>();
   const [provider, setProvider] = useState<ethers.providers.Web3Provider>();
@@ -31,8 +39,10 @@ function ParentScreen() {
       navigate("/");
     }
 
-    const provider = new ethers.providers.Web3Provider((window as any).ethereum);
-    await provider.send('eth_requestAccounts', []);
+    const provider = new ethers.providers.Web3Provider(
+      (window as any).ethereum
+    );
+    await provider.send("eth_requestAccounts", []);
 
     const signer = provider.getSigner();
     const addr = await signer.getAddress();
@@ -43,7 +53,11 @@ function ParentScreen() {
 
     ledger?.removeAllListeners();
 
-    const tmpLedger = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+    const tmpLedger = new ethers.Contract(
+      CONTRACT_ADDRESS,
+      CONTRACT_ABI,
+      signer
+    );
     setProvider(provider);
     setLedger(tmpLedger);
 
@@ -61,23 +75,28 @@ function ParentScreen() {
     const tmpAddress = await signer.getAddress();
     setWalletAddr(tmpAddress);
 
-    tmpLedger.getBalance().then((balance: string) => { setAccountBalance(balance) }).catch(console.error);
+    tmpLedger
+      .getBalance()
+      .then((balance: string) => {
+        setAccountBalance(balance);
+      })
+      .catch(console.error);
 
     let balanceFilter = {
       topics: [
         ethers.utils.id("BalanceChange(address,uint256)"),
-        "0x000000000000000000000000" + tmpAddress.substring(2)
-      ]
+        "0x000000000000000000000000" + tmpAddress.substring(2),
+      ],
     };
     tmpLedger.on(balanceFilter, (_: string, value: ethers.BigNumber) => {
-      setAccountBalance(value.toString())
+      setAccountBalance(value.toString());
     });
 
     let receiversFilter = {
       topics: [
         ethers.utils.id("ReceiverChange(address,bool,address,string)"),
-        "0x000000000000000000000000" + tmpAddress.substring(2)
-      ]
+        "0x000000000000000000000000" + tmpAddress.substring(2),
+      ],
     };
     tmpLedger.on(receiversFilter, receiverEventListener);
 
@@ -88,21 +107,23 @@ function ParentScreen() {
     if (contract != null) {
       let receiverList = await contract.getReceivers();
       receiverList.map((a: any) => {
-        return { addr: a['addr'], nickname: a['nickname'] };
-      })
+        return { addr: a["addr"], nickname: a["nickname"] };
+      });
       setReceivers(receiverList);
     }
-  }
+  };
 
   useEffect(() => {
-    initMetaMask().then((contract) => {
-      fetchReceivers(contract!)
-    }).catch(console.error);
+    initMetaMask()
+      .then((contract) => {
+        fetchReceivers(contract!);
+      })
+      .catch(console.error);
 
     (window as any).ethereum?.removeAllListeners();
-    (window as any).ethereum?.on('accountsChanged', () => {
+    (window as any).ethereum?.on("accountsChanged", () => {
       initMetaMask().then((contract) => {
-        fetchReceivers(contract!).catch(console.error)
+        fetchReceivers(contract!).catch(console.error);
       });
     });
   }, []);
@@ -114,7 +135,7 @@ function ParentScreen() {
       topics: [
         ethers.utils.id("Transfer(address,address,uint256)"),
         "0x000000000000000000000000" + walletAddr.substring(2),
-      ]
+      ],
     };
 
     const receiveFilter = {
@@ -124,7 +145,7 @@ function ParentScreen() {
         ethers.utils.id("Transfer(address,address,uint256)"),
         null,
         "0x000000000000000000000000" + walletAddr.substring(2),
-      ]
+      ],
     };
 
     const sendEvents = await provider!.getLogs(sendFilter);
@@ -149,7 +170,11 @@ function ParentScreen() {
 
     for (const event of sendEvents) {
       const date = (await provider!.getBlock(event.blockNumber)).timestamp;
-      const decoded = interf.decodeEventLog("Transfer", event.data, event.topics);
+      const decoded = interf.decodeEventLog(
+        "Transfer",
+        event.data,
+        event.topics
+      );
       send.push({
         key: event.transactionHash,
         sender: `You (${decoded.from})`,
@@ -161,7 +186,11 @@ function ParentScreen() {
 
     for (const event of receiveEvents) {
       const date = (await provider!.getBlock(event.blockNumber)).timestamp;
-      const decoded = interf.decodeEventLog("Transfer", event.data, event.topics);
+      const decoded = interf.decodeEventLog(
+        "Transfer",
+        event.data,
+        event.topics
+      );
       send.push({
         key: event.transactionHash,
         sender: decoded.from,
@@ -171,12 +200,17 @@ function ParentScreen() {
       });
     }
 
-    const dateFormat = Intl.DateTimeFormat(undefined, { dateStyle: 'short', timeStyle: 'medium' });
+    const dateFormat = Intl.DateTimeFormat(undefined, {
+      dateStyle: "short",
+      timeStyle: "medium",
+    });
 
     // Warning: resource-heavy operations ahead, look away
-    const txns = send.concat(receive)
+    const txns = send.concat(receive);
     txns.sort((a, b) => parseInt(b.date) - parseInt(a.date));
-    txns.forEach((txn) => { txn.date = dateFormat.format(new Date(parseInt(txn.date) * 1000)) });
+    txns.forEach((txn) => {
+      txn.date = dateFormat.format(new Date(parseInt(txn.date) * 1000));
+    });
     setTransactions(txns);
   };
 
@@ -186,20 +220,28 @@ function ParentScreen() {
     }
   }, [walletAddr]);
 
-  const receiverEventListener = (_: string, added: boolean, receiver: string, nickname: string, event: any) => {
+  const receiverEventListener = (
+    _: string,
+    added: boolean,
+    receiver: string,
+    nickname: string,
+    event: any
+  ) => {
     if (added) {
-      setReceivers((receiverList) => receiverList.concat([{ addr: receiver, nickname: nickname }]));
+      setReceivers((receiverList) =>
+        receiverList.concat([{ addr: receiver, nickname: nickname }])
+      );
     } else {
       setReceivers((receiverList) => {
         let list = receiverList.concat();
-        const index = list.findIndex(a => a.addr === receiver);
+        const index = list.findIndex((a) => a.addr === receiver);
         if (index !== -1) {
           list.splice(index, 1);
         }
         return list;
       });
     }
-  }
+  };
 
   const logoThirdStyle: CSS.Properties = {
     position: "relative",
@@ -214,7 +256,6 @@ function ParentScreen() {
     height: "12em",
     background:
       "linear-gradient(270deg, #BEA8F5 0%, rgba(190, 168, 245, 0) 100%)",
-
   };
 
   const textStyle: CSS.Properties = {
@@ -224,7 +265,6 @@ function ParentScreen() {
     lineHeight: "41px",
     letterSpacing: "-0.01em",
     color: "#4E1DAC",
-
   };
 
   const receiverLineStyle: CSS.Properties = {
@@ -250,7 +290,6 @@ function ParentScreen() {
       "-2px 2px 12px rgba(0, 0, 0, 0.25), inset -2px 2px 2px rgba(0, 0, 0, 0.1)",
     borderRadius: "2.5rem",
   };
-
 
   //receiverlar için container
 
@@ -295,9 +334,9 @@ function ParentScreen() {
     fontWeight: "bold",
 
     lineHeight: "41px",
-    paddingLeft: "3em",
+    paddingLeft: "10em",
     marginBottom: "10em",
-    marginTop: "2em"
+    marginTop: "2em",
   };
 
   const amountContainer: CSS.Properties = {
@@ -305,31 +344,63 @@ function ParentScreen() {
     fontWeight: "bold",
     lineHeight: "41px",
 
-    margin: "2em 4em 0 4em",
-
+    margin: "1em 4em 0 4em",
   };
 
   const transferContainer: CSS.Properties = {
     fontFamily: "Ubuntu",
     fontWeight: "bold",
 
-    marginBottom: "10em",
+    margin: "-6em 0 0 0",
   };
 
-
+  //API
+  useEffect(() => { 
+    fetch("https://exchange-rates.abstractapi.com/v1/live/?api_key=9b626d5b57974e3ab328bc8325f56568&base=ETH&target=USD,EUR,TRY,GBP,BTC", {
+    })
+      .then((response) => response.json())
+      .then((data) =>
+          {
+        setEthToUSD(
+          (Math.round(parseFloat(data.exchange_rates.USD) * 1000) / 1000).toString()
+        );
+        setEthToEUR(
+          (Math.round(parseFloat(data.exchange_rates.EUR) * 1000) / 1000).toString()
+        );
+        setEthToTRY(
+          (Math.round(parseFloat(data.exchange_rates.TRY) * 1000) / 1000).toString()
+        );
+        setEthToGBP(
+          (Math.round(parseFloat(data.exchange_rates.GBP) * 1000) / 1000).toString()
+        );
+        setEthToBTC(
+          (Math.round(parseFloat(data.exchange_rates.BTC) * 1000) / 1000).toString()
+        )
+          }
+          
+      );
+  }, []);
+  
   return (
     <>
       <Row style={navbarContainer}>
-        <Col flex={1} style={logoThirdStyle}><Logo /></Col>
+        <Col flex={1} style={logoThirdStyle}>
+          <Logo />
+        </Col>
         <Col flex={3}></Col>
-        <Col flex={1}><NavBar addr={walletAddr} balance={ethers.utils.formatEther(accountBalance)} /></Col>
+        <Col flex={0.1}>
+          <NavBar
+            addr={walletAddr}
+            balance={ethers.utils.formatEther(accountBalance)}
+          />
+        </Col>
       </Row>
 
       <Row>
         <Col flex={1}></Col>
         <Col flex={4} style={glassContainer}>
           <Row style={exchangeContainer}>
-            <h1>ETH Exchange Values:</h1>
+            <h1> ETH Exchange Values: {ethToUSD} {ethToEUR} {ethToTRY} {ethToGBP} {ethToBTC}</h1>
           </Row>
           <Row>
             <Col flex={1}></Col>
@@ -343,14 +414,18 @@ function ParentScreen() {
                 onWithdraw={async (amount) => {
                   const tx = await ledger!.withdraw(amount);
                   await tx.wait();
-                }} />
+                }}
+              />
             </Col>
             <Col flex={2} style={transferContainer}>
               <h2>Transfer</h2>
-              <TransferForm receivers={receivers} onTransfer={async (addr, amount) => {
-                const tx = await ledger!.send(addr, amount);
-                await tx.wait();
-              }} />
+              <TransferForm
+                receivers={receivers}
+                onTransfer={async (addr, amount) => {
+                  const tx = await ledger!.send(addr, amount);
+                  await tx.wait();
+                }}
+              />
             </Col>
             <Col flex={1}></Col>
           </Row>
@@ -362,12 +437,18 @@ function ParentScreen() {
       <Row style={middleContainer}>
         <Col flex={1}></Col>
         <Col flex={2}>
-          <Row> <h1 style={textStyle}>Add New Receiver</h1></Row>
+          <Row>
+            {" "}
+            <h1 style={textStyle}>Add New Receiver</h1>
+          </Row>
           <hr style={receiverLineStyle} />
-          <Row style={addNewReceiverStyle}><AddReceiverForm onSubmit={async (addr, nickname) => {
-            const tx = await ledger!.registerReceiver(addr, nickname);
-            await tx.wait();
-          }} />
+          <Row style={addNewReceiverStyle}>
+            <AddReceiverForm
+              onSubmit={async (addr, nickname) => {
+                const tx = await ledger!.registerReceiver(addr, nickname);
+                await tx.wait();
+              }}
+            />
           </Row>
         </Col>
         <Col flex={2}>
@@ -376,10 +457,13 @@ function ParentScreen() {
           </Row>
           <hr style={receiverLineStyle} />
           <Row style={myReceiversStyle}>
-            <ReceiverList receivers={receivers} onRemove={async (address) => {
-              const tx = await ledger!.forgetReceiver(address);
-              await tx.wait();
-            }} />
+            <ReceiverList
+              receivers={receivers}
+              onRemove={async (address) => {
+                const tx = await ledger!.forgetReceiver(address);
+                await tx.wait();
+              }}
+            />
           </Row>
         </Col>
         <Col flex={1}></Col>
@@ -394,8 +478,10 @@ function ParentScreen() {
 
       <Row>
         <Col flex={1}></Col>
-        <Col flex={3} style={tableStyle}><HistoryTable data={transactions} /></Col>
-        <Col flex={1}>  </Col>
+        <Col flex={3} style={tableStyle}>
+          <HistoryTable data={transactions} />
+        </Col>
+        <Col flex={1}> </Col>
       </Row>
     </>
   );

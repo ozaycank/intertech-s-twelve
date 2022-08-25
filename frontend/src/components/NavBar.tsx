@@ -17,7 +17,6 @@ const NavBar: React.FC<NavbarProps> = ({ addr, balance }) => {
 
   let navigate = useNavigate();
 
-
   const goLanding = () => {
   navigate("/");
   return;
