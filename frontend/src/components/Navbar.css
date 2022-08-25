@@ -9,7 +9,7 @@
 /* yazıların hepsi */
 .your-account{
     direction: rtl;
-    margin: 2em 1em 0 60em;   
+    margin: 2em 1em 0 0;   
 }
 
 /*sadece your acc yazısı*/
@@ -80,5 +80,4 @@
     box-shadow: -2px 2px 12px rgba(0, 0, 0, 0.25), inset -2px 2px 12px rgba(0, 0, 0, 0.25), inset -2px 2px 12px rgba(0, 0, 0, 0.25);
     color: pink; 
     top: 25%;
-    transform: scale(1.1);
 }

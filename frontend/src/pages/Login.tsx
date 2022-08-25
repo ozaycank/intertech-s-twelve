@@ -7,6 +7,8 @@ import ChildImg from "../images/BGChild.svg";
 import ParentImg from "../images/BG.svg";
 import { useNavigate } from "react-router-dom";
 import { ethers } from "ethers";
+import type { RangePickerProps } from "antd/es/date-picker";
+import moment from "moment";
 
 import { CONTRACT_ADDRESS, CONTRACT_ABI } from '../Contract';
 
@@ -16,6 +18,13 @@ function Login() {
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   let ledger: ethers.Contract;
+
+  // eslint-disable-next-line arrow-body-style
+  const disabledDate: RangePickerProps["disabledDate"] = (current) => {
+    // Can not select days before today and today
+    return current && current.valueOf() < moment().subtract(18,'years').valueOf();
+    
+  };
 
   const initMetaMask = async () => {
     if ((window as any).ethereum == null) {
@@ -211,7 +220,7 @@ function Login() {
                 Choose
               </Button>
               <Modal
-                title="We need to know your birthday. (*)"
+                title="We need to know the child birthday. (*)"
                 centered
                 visible={visible}
                 onOk={() => setVisible(false)}
@@ -226,11 +235,17 @@ function Login() {
                     rules={[
                       {
                         required: true,
-                        message: "You need to enter your birthdate!",
+                        message: "You need to enter child's birthdate!",
                       },
                     ]}
                   >
-                    <DatePicker />
+                    <DatePicker 
+                      format="YYYY-MM-DD "
+                      disabledDate={disabledDate}
+                      showTime={{
+                        defaultValue: moment("00:00:00"),
+                      }}
+                    />
                   </Form.Item>
                   <Form.Item>
                     <Button

@@ -160,7 +160,7 @@ function ChildScreen() {
     letterSpacing: "-0.01em",
     color: "#4E1DAC",
     marginLeft: "4em",
-    marginTop: "0.2em",
+    marginTop: "1.2em",
   };
 
   const historyLineStyle: CSS.Properties = {
@@ -192,12 +192,23 @@ function ChildScreen() {
     borderRadius: "2.5rem",
   };
 
+  const glassText: CSS.Properties = {
+    fontFamily: 'Ubuntu',
+    fontSize: "1.2em",
+    fontWeight: 'bold',
+    lineHeight: '1em',
+    letterSpacing: '-0.01em',
+    color: "#000000",
+
+    margin: "2em 0 0 2em", 
+  }
+
   return (
     <>
       <Row style={navbarContainer}>
         <Col flex={1} style={logoThirdStyle}><Logo /></Col>
         <Col flex={3}></Col>
-        <Col flex={1}><NavBar addr={walletAddr} balance={ethers.utils.formatEther(balance)} /></Col>
+        <Col flex={0.1}><NavBar addr={walletAddr} balance={ethers.utils.formatEther(balance)} /></Col>
       </Row>
 
 
@@ -208,7 +219,7 @@ function ChildScreen() {
             <h1 style={FirstLineStyle}>Your Account Information</h1>
           </Row>
           <Row>
-            <h2 style={secondLineStyle}>Child Account</h2>
+            <h2 style={secondLineStyle}>When you turn 18 your account will <br />  turn into a parent account,  and you will <br />  be able to withdraw money from your account.</h2>
           </Row>
           <Row>
             <h2 style={thirdLineStyle}>Time remaining before you can withdraw your balance.</h2>
@@ -227,7 +238,10 @@ function ChildScreen() {
           </Row>
         </Col>
 
-        <Col style={glassContainer} > <span></span><PieChart /></Col>
+        <Col style={glassContainer} > 
+          <Row><span style={glassText}>Impact percentages of your elders who invested in your account:</span> </Row>
+          <Row><PieChart /></Row>
+        </Col>
       </Row>
 
       <Row>
