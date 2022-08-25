@@ -16,6 +16,9 @@ contract Ledger {
         mapping(uint => NamedReceiver) receivers;
     }
 
+    uint public totalTransfers;
+    uint public totalTransferred;
+
     address systemOwner;
     address[] adminUsers;
     mapping(address => Account) accounts;
@@ -32,6 +35,8 @@ contract Ledger {
     event Deposit(address indexed from, uint value);
     event Withdraw(address indexed owner, uint value);
     event Transfer(address indexed from, address indexed to, uint value);
+    event BalanceChange(address indexed owner, uint balance);
+    event ReceiverChange(address indexed owner, bool added, address receiver, string nickname);
 
     modifier onlyAdmins {
         require(isAdmin(), "Only admins can perform this action.");
@@ -57,18 +62,16 @@ contract Ledger {
 
     /// Deposit ether to user account
     receive() external payable onlyAccountOwners onlyAdults { 
-        Account storage account = accounts[msg.sender];
-        account.balance += msg.value;
-
-        emit Deposit(msg.sender, msg.value);
+        deposit();
     }
 
     /// Deposit ether to user account
-    function deposit() external payable onlyAccountOwners onlyAdults {
+    function deposit() public payable onlyAccountOwners onlyAdults {
         Account storage account = accounts[msg.sender];
         account.balance += msg.value;
 
         emit Deposit(msg.sender, msg.value);
+        emit BalanceChange(msg.sender, account.balance);
     }
 
     /// Withdraw ether from user account
@@ -82,6 +85,7 @@ contract Ledger {
         account.walletAddress.transfer(amount);
 
         emit Withdraw(msg.sender, amount);
+        emit BalanceChange(msg.sender, account.balance);
     }
 
     /// Transfer ether to some other account
@@ -98,7 +102,12 @@ contract Ledger {
         account.balance -= amount;
         accounts[to].balance += amount;
 
+        totalTransfers++;
+        totalTransferred += amount;
+
         emit Transfer(msg.sender, to, amount);
+        emit BalanceChange(msg.sender, account.balance);
+        emit BalanceChange(to, accounts[to].balance);
     }
 
     /// As an admin user declare another user as admin
@@ -129,6 +138,8 @@ contract Ledger {
     function registerReceiver(address receiver, string calldata nickname) public onlyAccountOwners onlyAdults {
         Account storage account = accounts[msg.sender];
         account.receivers[account.numReceivers++] = NamedReceiver({addr: receiver, nickname: nickname});
+
+        emit ReceiverChange(msg.sender, true, receiver, nickname);
     }
 
     /// Remove a registered receiver from your account
@@ -143,8 +154,10 @@ contract Ledger {
                 break;
             }
         }
-        if (index == type(uint).max)
+        if (index > account.numReceivers - 1)
             revert NoAccountExists();
+
+        emit ReceiverChange(msg.sender, false, receiver, account.receivers[index].nickname);
 
         account.numReceivers--;
         for (uint i = index; i < account.numReceivers; i++) {
@@ -178,7 +191,7 @@ contract Ledger {
         NamedReceiver[] memory receivers = new NamedReceiver[](account.numReceivers);
 
         for (uint i = 0; i < receivers.length; i++) {
-            receivers[i] = account.receivers[0];
+            receivers[i] = account.receivers[i];
         }
 
         return receivers;
