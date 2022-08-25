@@ -19,6 +19,7 @@ function ChildScreen() {
   const [balance, setBalance] = useState("0");
   const [provider, setProvider] = useState<ethers.providers.Web3Provider>();
   const [transactions, setTransactions] = useState(Array<any>);
+  const [topSenders, setTopSenders] = useState(Array<{type: string, value: number}>);
 
   let navigate = useNavigate();
   let ledger: ethers.Contract;
@@ -97,12 +98,33 @@ function ChildScreen() {
     setTransactions(txns);
   }
 
-
   useEffect(() => {
     if (provider != null && walletAddr != "") {
       fetchHistory();
     }
   }, [walletAddr]);
+
+  useEffect(() => {
+    if (transactions.length > 0) {
+      let senders = new Map<string, ethers.BigNumber>();
+
+      for (const txn of transactions) {
+        const amount = ethers.utils.parseEther(txn.amount.slice(0, -4));
+        if (senders.has(txn.sender)) {
+          senders.set(txn.sender, senders.get(txn.sender)!.add(amount));
+        } else {
+          senders.set(txn.sender, amount);
+        }
+      }
+
+      let senderList: Array<{type: string, value: number}> = [];
+      for (const [sender, amount] of senders) {
+        senderList.push({type: sender, value: amount.mul(100).div(balance).toNumber()});
+      }
+      senderList.sort((a, b) => (b.value - a.value));
+      setTopSenders(senderList);
+    }
+  }, [transactions]);
 
   const logoThirdStyle: CSS.Properties = {
     position: "relative",
@@ -240,7 +262,7 @@ function ChildScreen() {
 
         <Col style={glassContainer} > 
           <Row><span style={glassText}>Impact percentages of your elders who invested in your account:</span> </Row>
-          <Row><PieChart /></Row>
+          <Row><PieChart pies={topSenders} total={ethers.utils.formatEther(balance) + " ETH"} /></Row>
         </Col>
       </Row>
 
