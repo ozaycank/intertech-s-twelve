@@ -211,13 +211,10 @@ function ParentScreen() {
 
   const navbarContainer: CSS.Properties = {
     position: "relative",
-    height: "8.75em",
-    left: "0px",
-    right: "0px",
-    top: "0px",
+    height: "12em",
     background:
       "linear-gradient(270deg, #BEA8F5 0%, rgba(190, 168, 245, 0) 100%)",
-    paddingBottom: "11em",
+
   };
 
   const textStyle: CSS.Properties = {
@@ -323,9 +320,7 @@ function ParentScreen() {
   return (
     <>
       <Row style={navbarContainer}>
-        <Col flex={1} style={logoThirdStyle}>
-          <Logo />
-        </Col>
+        <Col flex={1} style={logoThirdStyle}><Logo /></Col>
         <Col flex={3}></Col>
         <Col flex={1}><NavBar addr={walletAddr} balance={ethers.utils.formatEther(accountBalance)} /></Col>
       </Row>

@@ -18,11 +18,9 @@ const NavBar: React.FC<NavbarProps> = ({ addr, balance }) => {
           <span className="UbuntuMedium">Account Balance: </span>
           <span className="UbuntuBold">{balance} ETH </span>
         </div>
-        <div className="overlap-group2">
           <div>
             <Button className="LogOutButton">Log Out</Button>
           </div>
-        </div>
       </div>
 
       <div>

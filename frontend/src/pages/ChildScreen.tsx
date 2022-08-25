@@ -109,16 +109,13 @@ function ChildScreen() {
     fontFamily: "Inter, sans-serif",
     paddingLeft: "1em",
     marginBottom: "10em",
-    transform: 'scale(0.8)'
+    transform: 'scale(0.9)'
 
   };
 
   const navbarContainer: CSS.Properties = {
-    position: "relative",
-    height: "8.75em",
+    position: "relative",height: "12em",
     background: "linear-gradient(270deg, #BEA8F5 0%, rgba(190, 168, 245, 0) 100%)",
-    paddingBottom: "11em",
-
   };
 
   const FirstLineStyle: CSS.Properties = {
@@ -199,7 +196,7 @@ function ChildScreen() {
     <>
       <Row style={navbarContainer}>
         <Col flex={1} style={logoThirdStyle}><Logo /></Col>
-        <Col flex={2}></Col>
+        <Col flex={3}></Col>
         <Col flex={1}><NavBar addr={walletAddr} balance={ethers.utils.formatEther(balance)} /></Col>
       </Row>
 
