@@ -2,13 +2,27 @@ import { Button, Avatar } from "antd";
 import React from "react";
 import "./Navbar.css";
 import { UserOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+
 
 interface NavbarProps {
   addr: string;
   balance: string;
 }
 
+
+
+
 const NavBar: React.FC<NavbarProps> = ({ addr, balance }) => {
+
+  let navigate = useNavigate();
+
+
+  const goLanding = () => {
+  navigate("/");
+  return;
+  }
+
   return (
     <div className="container">
       <div className="your-account">
@@ -19,7 +33,7 @@ const NavBar: React.FC<NavbarProps> = ({ addr, balance }) => {
           <span className="UbuntuBold">{balance} ETH </span>
         </div>
           <div>
-            <Button className="LogOutButton">Log Out</Button>
+            <Button className="LogOutButton" onClick={goLanding}>Log Out</Button>
           </div>
       </div>
 

@@ -9,7 +9,7 @@
 /* yazıların hepsi */
 .your-account{
     direction: rtl;
-    margin: 1em 1em 0 -10em;   
+    margin: 2em 1em 0 60em;   
 }
 
 /*sadece your acc yazısı*/
@@ -58,7 +58,7 @@
 }
 
 .LogOutButton{
-    top: 1.2em;
+    top: 0.6em;
     width: 8em;
     letter-spacing: -0.011em;
     text-align: center;
@@ -77,13 +77,8 @@
     -webkit-backdrop-filter: blur(0.75em) brightness(100%);
     backdrop-filter: blur(12px);
     background-color: white;
-    left: 24%;
-    top: 20%;
     box-shadow: -2px 2px 12px rgba(0, 0, 0, 0.25), inset -2px 2px 12px rgba(0, 0, 0, 0.25), inset -2px 2px 12px rgba(0, 0, 0, 0.25);
     color: pink; 
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    padding: 0em 1.25em;
-
+    top: 25%;
+    transform: scale(1.1);
 }

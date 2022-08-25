@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { Col, Row, Input, Space, Table } from 'antd'
+import { Col, Row, Input, Space, Table, Empty } from 'antd'
 import { CloseOutlined } from '@ant-design/icons';
 import { ethers } from 'ethers';
 import type {ColumnsType} from 'antd/es/table';
@@ -50,7 +50,7 @@ const HistoryTable: FC<HistoryTableProps> = ({ data }) => {
 
     return (
         <div>
-            <Table className= "table-striped-rows"  columns={columns} dataSource={data} pagination={{ pageSize: 25 }} />
+            <Table className= "table-striped-rows" locale={{emptyText:  <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description='You do not have  a transaction history yet.' /> }}  columns={columns} dataSource={data} pagination={{ pageSize: 25 }} />
         </div>
     );
 }

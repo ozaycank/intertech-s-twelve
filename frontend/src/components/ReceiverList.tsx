@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { Button, List, Avatar, notification } from 'antd'
+import { Button, List, Avatar, notification, Empty } from 'antd'
 import { CloseOutlined } from '@ant-design/icons';
 import { ethers } from 'ethers';
 
@@ -30,6 +30,7 @@ const ReceiverList: FC<ReceiversProps> = ({ receivers, onRemove }) => {
             <List style={{ width: '460px' }}
                 itemLayout="horizontal"
                 dataSource={receivers}
+                locale={{emptyText:  <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description='You have not added a receiver yet.' /> }} 
                 renderItem={(item) => (
                     <List.Item
                         style={{ textAlign: 'left' }}
@@ -45,7 +46,7 @@ const ReceiverList: FC<ReceiversProps> = ({ receivers, onRemove }) => {
                             />
                         }
                     >
-                        <List.Item.Meta
+                        <List.Item.Meta 
                             // TODO: Change avatar with ENS Avatars if available
                             avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
                             title={item['nickname']}

@@ -227,7 +227,7 @@ function ChildScreen() {
           </Row>
         </Col>
 
-        <Col style={glassContainer} ><PieChart /></Col>
+        <Col style={glassContainer} > <span></span><PieChart /></Col>
       </Row>
 
       <Row>
