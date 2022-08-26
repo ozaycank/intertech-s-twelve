@@ -19,7 +19,7 @@ function ChildScreen() {
   const [balance, setBalance] = useState("0");
   const [provider, setProvider] = useState<ethers.providers.Web3Provider>();
   const [transactions, setTransactions] = useState(Array<any>);
-  const [topSenders, setTopSenders] = useState(Array<{type: string, value: number}>);
+  const [topSenders, setTopSenders] = useState(Array<{ type: string, value: number }>);
   const [refreshHistory, setRefreshHistory] = useState(false);
 
   let navigate = useNavigate();
@@ -92,7 +92,7 @@ function ChildScreen() {
       dateStyle: "short",
       timeStyle: "medium",
     });
-    
+
     const events = await provider!.getLogs(transferFilter);
     const promises = events.map(async (event) => {
       const date = (await provider!.getBlock(event.blockNumber)).timestamp;
@@ -131,9 +131,9 @@ function ChildScreen() {
         }
       }
 
-      let senderList: Array<{type: string, value: number}> = [];
+      let senderList: Array<{ type: string, value: number }> = [];
       for (const [sender, amount] of senders) {
-        senderList.push({type: sender, value: amount.mul(100).div(balance).toNumber()});
+        senderList.push({ type: sender, value: amount.mul(100).div(balance).toNumber() });
       }
       senderList.sort((a, b) => (b.value - a.value));
       setTopSenders(senderList);
@@ -150,7 +150,8 @@ function ChildScreen() {
   };
 
   const navbarContainer: CSS.Properties = {
-    position: "relative",height: "12em",
+    position: "relative",
+    height: "12em",
     background: "linear-gradient(270deg, #BEA8F5 0%, rgba(190, 168, 245, 0) 100%)",
   };
 
@@ -174,7 +175,6 @@ function ChildScreen() {
     paddingBottom: "4em",
   };
 
-
   const thirdLineStyle: CSS.Properties = {
     fontFamily: 'Ubuntu',
     fontSize: "1.2em",
@@ -184,10 +184,6 @@ function ChildScreen() {
     color: "#000000",
   };
 
-  const textsContainer: CSS.Properties = {
-    padding: "8em 8em 0 4em",
-  };
-
   const histTextStyle: CSS.Properties = {
     fontFamily: "Ubuntu",
     fontSize: "36px",
@@ -195,19 +191,20 @@ function ChildScreen() {
     lineHeight: "41px",
     letterSpacing: "-0.01em",
     color: "#4E1DAC",
-    marginLeft: "4em",
+    marginLeft: "8%",
     marginTop: "1.2em",
   };
 
   const historyLineStyle: CSS.Properties = {
     position: "absolute",
-    width: "82%",
-    left: "9em",
+    width: "84%",
+    marginLeft: "8%",
     border: "1px solid #4E1DAC",
   };
 
   const tableStyle: CSS.Properties = {
-    margin: "4em 4em 0 4em",
+    margin: "4em 8% 0 8%",
+    width: "84%",
   };
 
   const clockStyle: CSS.Properties = {
@@ -215,10 +212,7 @@ function ChildScreen() {
   };
 
   const glassContainer: CSS.Properties = {
-    position: "relative",
-    height: "30em",
-    width: "42em",
-    margin: "4em 10em 0 4em",
+    paddingRight: "2em",
 
     backdropFilter: "blur(20px)",
     background:
@@ -236,8 +230,9 @@ function ChildScreen() {
     letterSpacing: '-0.01em',
     color: "#000000",
 
-    margin: "2em 0 0 2em", 
-  }
+    margin: "2em 0 0 2em",
+  };
+
   const BackTopStyle: React.CSSProperties = {
     height: 40,
     width: 40,
@@ -248,7 +243,7 @@ function ChildScreen() {
     textAlign: 'center',
     fontSize: 14,
   };
- 
+
 
   return (
     <>
@@ -259,9 +254,14 @@ function ChildScreen() {
       </Row>
 
 
-      <Row justify="center">
+      <Row justify="center" style={{
+        display: "flex",
+        justifyContent: "space-between",
+        margin: "4em 8% 0 8%",
+        gap: "0 2%",
+      }}>
 
-        <Col style={textsContainer}>
+        <Col>
           <Row>
             <h1 style={FirstLineStyle}>Your Account Information</h1>
           </Row>
@@ -285,8 +285,8 @@ function ChildScreen() {
           </Row>
         </Col>
 
-        <Col style={glassContainer} > 
-          <Row><span style={glassText}>Impact percentages of your elders who invested in your account:</span> </Row>
+        <Col style={glassContainer}>
+          <Row><span style={glassText}>Impact percentages of your elders who invested in your account</span> </Row>
           <Row><PieChart pies={topSenders} total={ethers.utils.formatEther(balance) + " ETH"} /></Row>
         </Col>
       </Row>

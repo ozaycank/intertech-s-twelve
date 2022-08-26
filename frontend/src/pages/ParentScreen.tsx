@@ -263,7 +263,6 @@ function ParentScreen() {
 
   const glassContainer: CSS.Properties = {
     position: "relative",
-    height: "40em",
     width: "60em",
 
     right: "0em",
