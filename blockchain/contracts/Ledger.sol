@@ -154,7 +154,7 @@ contract Ledger {
                 break;
             }
         }
-        if (index > account.numReceivers - 1)
+        if (index >= account.numReceivers)
             revert NoAccountExists();
 
         emit ReceiverChange(msg.sender, false, receiver, account.receivers[index].nickname);
