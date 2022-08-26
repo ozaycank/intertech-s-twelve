@@ -11,10 +11,19 @@ import { ethers } from "ethers";
 import { CONTRACT_ADDRESS, CONTRACT_ABI, CONTRACT_BLOCK } from '../Contract';
 
 
+interface DataType {
+  key: string,
+  sender: string,
+  receiver: string,
+  date: string,
+  amount: string,
+}
+
 function AdminScreen() {
   const [totalTransfers, setTotalTransfers] = useState("0");
   const [totalTransferred, setTotalTransfferred] = useState("0");
-  const [transactions, setTransactions] = useState(Array<any>);
+  const [transactions, setTransactions] = useState(Array<DataType>);
+  const [filteredTransactions, setFilteredTransactions] = useState(Array<DataType>);
 
   let navigate = useNavigate();
 
@@ -23,7 +32,7 @@ function AdminScreen() {
       navigate("/");
       return;
     }
-    
+
     const provider = new ethers.providers.Web3Provider((window as any).ethereum);
     const ledger = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, provider);
 
@@ -49,8 +58,8 @@ function AdminScreen() {
       const decoded = interf.decodeEventLog("Transfer", event.data, event.topics);
       return {
         key: event.transactionHash,
-        sender: decoded.from,
-        receiver: decoded.to,
+        sender: decoded.from as string,
+        receiver: decoded.to as string,
         date: dateFormat.format(new Date(date * 1000)),
         amount: ethers.utils.formatEther(decoded["value"]) + " ETH",
       };
@@ -59,6 +68,7 @@ function AdminScreen() {
     const txns = await Promise.all(promises);
     txns.reverse();
     setTransactions(txns);
+    setFilteredTransactions(txns);
   }
 
   useEffect(() => {
@@ -68,7 +78,12 @@ function AdminScreen() {
   //searchbar
   const { Search } = Input;
 
-  const onSearch = (value: string) => console.log(value);
+  const onSearch = (value: string) => {
+    setFilteredTransactions(transactions.filter((element) =>
+      element.sender.toLowerCase().includes(value.trim().toLowerCase())
+      || element.receiver.toLowerCase().includes(value.trim().toLowerCase())
+    ));
+  };
 
   const logoThirdStyle: CSS.Properties = {
     position: "relative",
@@ -230,7 +245,7 @@ function AdminScreen() {
 
       <Row>
         <Col flex={1}></Col>
-        <Col flex={3}><HistoryTable data={transactions} /></Col>
+        <Col flex={3}><HistoryTable data={filteredTransactions} /></Col>
         <Col flex={1}></Col>
       </Row>
     </>
