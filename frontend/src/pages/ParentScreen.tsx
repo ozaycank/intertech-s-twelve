@@ -14,6 +14,12 @@ import NavBar from "../components/NavBar";
 import TransferForm from "../components/TransferForm";
 import { CONTRACT_ADDRESS, CONTRACT_ABI, CONTRACT_BLOCK } from "../Contract";
 
+import dollar from "../images/dollar.png";
+import lira from "../images/lira.png";
+import pound from "../images/pound.png";
+import euro from "../images/euro.png";
+import bitcoin from "../images/bitcoin.png";
+
 function ParentScreen() {
   const [walletAddr, setWalletAddr] = useState("");
   const [accountBalance, setAccountBalance] = useState("0");
@@ -314,11 +320,21 @@ function ParentScreen() {
   const exchangeContainer: CSS.Properties = {
     fontFamily: "Ubuntu",
     fontWeight: "bold",
-
     lineHeight: "41px",
-    paddingLeft: "10em",
-    marginBottom: "10em",
-    marginTop: "2em",
+    margin: "1.5em 0 5em 1em",
+    width: "100%"
+  };
+
+  const exchangeLine1: CSS.Properties = {
+    position: "absolute",
+    width: "95%",
+    border: "1px solid #FEC57A",
+ };
+
+  const exchangeLine2: CSS.Properties = {
+    position: "absolute",
+    width: "95%",
+    border: "1px solid #FFB7A0",
   };
 
   const amountContainer: CSS.Properties = {
@@ -326,15 +342,16 @@ function ParentScreen() {
     fontWeight: "bold",
     lineHeight: "41px",
 
-    margin: "1em 4em 0 4em",
+    margin: "-10.25em 0 0 7em",
   };
 
   const transferContainer: CSS.Properties = {
     fontFamily: "Ubuntu",
     fontWeight: "bold",
 
-    margin: "-6em 0 0 0",
+    margin: "-10em 0 0 6em",
   };
+
   const BackTopStyle: React.CSSProperties = {
     height: 40,
     width: 40,
@@ -382,6 +399,12 @@ function ParentScreen() {
       });
   }, []);
 
+  const imgStyle: CSS.Properties = {
+    display:"inline-block",
+    margin:"5px 20px",
+    padding:"5px",
+  }
+
   return (
     <>
       <Row style={navbarContainer}>
@@ -400,14 +423,22 @@ function ParentScreen() {
       <Row>
         <Col flex={1}></Col>
         <Col flex={4} style={glassContainer}>
-          <Row style={exchangeContainer}>
-            <h1>
-              {" "}
-              ETH Exchange Values: {ethToUSD} {ethToEUR} {ethToTRY} {ethToGBP}{" "}
-              {ethToBTC}
-            </h1>
-          </Row>
           <Row>
+            <h1 style={exchangeContainer}> ETH Exchange Values: <br /> 
+              <hr style={exchangeLine1}/>
+              <br/>
+                <div style={{textAlign:"center"}}>
+                  <div style = {imgStyle}><img width = "55" height = "55" src={dollar}  alt="görsel"    />  {ethToUSD}  </div>              
+                  <div style = {imgStyle}><img width = "55" height = "55" src={euro}    alt="görsel"    />  {ethToEUR}  </div>             
+                  <div style = {imgStyle}><img width = "55" height = "55" src={lira}    alt="görsel"    />  {ethToTRY}  </div>            
+                  <div style = {imgStyle}><img width = "55" height = "55" src={pound}   alt="görsel"    />  {ethToGBP}  </div>
+                  <div style = {imgStyle}><img width = "61" height = "61" src={bitcoin} alt="görsel"    />  {ethToBTC}  </div>  
+                </div>
+              <hr style={exchangeLine2}/>
+            </h1>
+          
+          </Row>
+          <Row style = {{display: "flex", justifyContent: "center", margin: "2em 2em 0 0" }} >
             <Col flex={1}></Col>
             <Col flex={2} style={amountContainer}>
               <h2>Withdraw / Deposit</h2>
