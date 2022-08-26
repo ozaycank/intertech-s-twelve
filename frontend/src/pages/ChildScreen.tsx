@@ -20,6 +20,7 @@ function ChildScreen() {
   const [provider, setProvider] = useState<ethers.providers.Web3Provider>();
   const [transactions, setTransactions] = useState(Array<any>);
   const [topSenders, setTopSenders] = useState(Array<{type: string, value: number}>);
+  const [refreshHistory, setRefreshHistory] = useState(false);
 
   let navigate = useNavigate();
   let ledger: ethers.Contract;
@@ -52,6 +53,7 @@ function ChildScreen() {
 
     const addr = await signer.getAddress();
     setWalletAddr(addr);
+    setRefreshHistory(true);
 
     let balanceFilter = {
       topics: [
@@ -61,7 +63,7 @@ function ChildScreen() {
     };
     ledger.on(balanceFilter, (_: string, value: ethers.BigNumber) => {
       setBalance(value.toString());
-      fetchHistory();
+      setRefreshHistory(true);
     });
   }
 
@@ -110,10 +112,11 @@ function ChildScreen() {
   }
 
   useEffect(() => {
-    if (provider != null && walletAddr != "") {
+    if (refreshHistory && provider != null && walletAddr != "") {
       fetchHistory();
+      setRefreshHistory(false);
     }
-  }, [walletAddr]);
+  }, [refreshHistory]);
 
   useEffect(() => {
     if (transactions.length > 0 && balance !== "0") {
