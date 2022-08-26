@@ -1,7 +1,7 @@
 import CSS from "csstype";
 import { useEffect, useState } from "react";
 import Logo from "../components/Logo";
-import { Col, Row, Statistic } from "antd";
+import { Col, Row, Statistic, BackTop } from "antd";
 import "antd/dist/antd.css";
 import PieChart from "../components/PieChart";
 import HistoryTable from "../components/HistoryTable";
@@ -238,6 +238,17 @@ function ChildScreen() {
 
     margin: "2em 0 0 2em", 
   }
+  const BackTopStyle: React.CSSProperties = {
+    height: 40,
+    width: 40,
+    lineHeight: '40px',
+    borderRadius: 4,
+    backgroundColor: '#CEBCEE',
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: 14,
+  };
+ 
 
   return (
     <>
@@ -292,6 +303,9 @@ function ChildScreen() {
         <Col flex={2} style={tableStyle}><HistoryTable data={transactions} /></Col>
         <Col flex={1}></Col>
       </Row>
+      <BackTop>
+        <div style={BackTopStyle}>UP</div>
+      </BackTop>
     </>
   );
 }

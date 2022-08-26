@@ -1,6 +1,6 @@
 import CSS from "csstype";
 import Logo from "../components/Logo";
-import { Col, Row } from "antd";
+import { Col, Row, BackTop } from "antd";
 import "antd/dist/antd.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -27,7 +27,6 @@ function ParentScreen() {
   const [ethToTRY, setEthToTRY] = useState("");
   const [ethToGBP, setEthToGBP] = useState("");
   const [ethToBTC, setEthToBTC] = useState("");
-
 
   const [ledger, setLedger] = useState<ethers.Contract>();
   const [provider, setProvider] = useState<ethers.providers.Web3Provider>();
@@ -146,15 +145,19 @@ function ParentScreen() {
     };
 
     const [sendEvents, receiveEvents] = await Promise.all([
-      provider!.getLogs(sendFilter), 
-      provider!.getLogs(receiveFilter)
+      provider!.getLogs(sendFilter),
+      provider!.getLogs(receiveFilter),
     ]);
-    
+
     const interf = new ethers.utils.Interface(CONTRACT_ABI);
 
     const sendPromises = sendEvents.map(async (event) => {
       const date = (await provider!.getBlock(event.blockNumber)).timestamp;
-      const decoded = interf.decodeEventLog("Transfer", event.data, event.topics);
+      const decoded = interf.decodeEventLog(
+        "Transfer",
+        event.data,
+        event.topics
+      );
       return {
         key: event.transactionHash,
         sender: `You (${decoded.from})`,
@@ -166,7 +169,11 @@ function ParentScreen() {
 
     const receivePromises = receiveEvents.map(async (event) => {
       const date = (await provider!.getBlock(event.blockNumber)).timestamp;
-      const decoded = interf.decodeEventLog("Transfer", event.data, event.topics);
+      const decoded = interf.decodeEventLog(
+        "Transfer",
+        event.data,
+        event.topics
+      );
       return {
         key: event.transactionHash,
         sender: decoded.from,
@@ -328,32 +335,51 @@ function ParentScreen() {
 
     margin: "-6em 0 0 0",
   };
+  const BackTopStyle: React.CSSProperties = {
+    height: 40,
+    width: 40,
+    lineHeight: '40px',
+    borderRadius: 4,
+    backgroundColor: '#CEBCEE',
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: 14,
+  };
 
   //API
   useEffect(() => {
-    fetch("https://exchange-rates.abstractapi.com/v1/live/?api_key=9b626d5b57974e3ab328bc8325f56568&base=ETH&target=USD,EUR,TRY,GBP,BTC", {
-    })
+    fetch(
+      "https://exchange-rates.abstractapi.com/v1/live/?api_key=9b626d5b57974e3ab328bc8325f56568&base=ETH&target=USD,EUR,TRY,GBP,BTC",
+      {}
+    )
       .then((response) => response.json())
-      .then((data) =>
-          {
+      .then((data) => {
         setEthToUSD(
-          (Math.round(parseFloat(data.exchange_rates.USD) * 1000) / 1000).toString()
+          (
+            Math.round(parseFloat(data.exchange_rates.USD) * 1000) / 1000
+          ).toString()
         );
         setEthToEUR(
-          (Math.round(parseFloat(data.exchange_rates.EUR) * 1000) / 1000).toString()
+          (
+            Math.round(parseFloat(data.exchange_rates.EUR) * 1000) / 1000
+          ).toString()
         );
         setEthToTRY(
-          (Math.round(parseFloat(data.exchange_rates.TRY) * 1000) / 1000).toString()
+          (
+            Math.round(parseFloat(data.exchange_rates.TRY) * 1000) / 1000
+          ).toString()
         );
         setEthToGBP(
-          (Math.round(parseFloat(data.exchange_rates.GBP) * 1000) / 1000).toString()
+          (
+            Math.round(parseFloat(data.exchange_rates.GBP) * 1000) / 1000
+          ).toString()
         );
         setEthToBTC(
-          (Math.round(parseFloat(data.exchange_rates.BTC) * 1000) / 1000).toString()
-        )
-          }
-          
-      );
+          (
+            Math.round(parseFloat(data.exchange_rates.BTC) * 1000) / 1000
+          ).toString()
+        );
+      });
   }, []);
 
   return (
@@ -375,7 +401,11 @@ function ParentScreen() {
         <Col flex={1}></Col>
         <Col flex={4} style={glassContainer}>
           <Row style={exchangeContainer}>
-            <h1> ETH Exchange Values: {ethToUSD} {ethToEUR} {ethToTRY} {ethToGBP} {ethToBTC}</h1>
+            <h1>
+              {" "}
+              ETH Exchange Values: {ethToUSD} {ethToEUR} {ethToTRY} {ethToGBP}{" "}
+              {ethToBTC}
+            </h1>
           </Row>
           <Row>
             <Col flex={1}></Col>
@@ -459,6 +489,9 @@ function ParentScreen() {
         </Col>
         <Col flex={1}> </Col>
       </Row>
+      <BackTop>
+        <div style={BackTopStyle}>UP</div>
+      </BackTop>
     </>
   );
 }

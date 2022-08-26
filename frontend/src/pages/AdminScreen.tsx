@@ -1,6 +1,6 @@
 import CSS from "csstype";
 import Logo from "../components/Logo";
-import { Col, Row, Input } from "antd";
+import { Col, Row, Input, BackTop } from "antd";
 import "antd/dist/antd.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -185,6 +185,17 @@ function AdminScreen() {
     marginLeft: "3em",
     marginBottom: "2.5em",
   };
+  const BackTopStyle: React.CSSProperties = {
+    height: 40,
+    width: 40,
+    lineHeight: '40px',
+    borderRadius: 4,
+    backgroundColor: '#CEBCEE',
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: 14,
+  };
+ 
 
   return (
     <>
@@ -233,6 +244,9 @@ function AdminScreen() {
         <Col flex={3}><HistoryTable data={transactions} /></Col>
         <Col flex={1}></Col>
       </Row>
+      <BackTop>
+        <div style={BackTopStyle}>UP</div>
+      </BackTop>
     </>
   );
 }
